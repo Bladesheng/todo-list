@@ -1,0 +1,59 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+$font-stack: 'Roboto', sans-serif;
+$font-color-primary: rgb(211, 211, 211);
+$font-color-secondary: rgb(25, 66, 146);
+
+$color-primary: rgb(95, 95, 95);
+$color-secondary: rgb(206, 177, 132);
+$color-dark: rgb(28, 8, 5);
+
+
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  height: 100vh;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-family: $font-stack;
+  color: $font-color-primary;
+  background-color: $color-primary;
+}
+
+
+header {
+  flex: 0 1 auto;
+  padding: 2em 0;
+}
+
+
+main {
+  width: 100vw;
+  flex: 1 1 auto;
+  display: flex;
+}
+
+
+footer {
+  flex: 0 1 auto;
+  
+  text-align: center;
+  padding: 0.8rem;
+  font-size: 0.8rem;
+
+  a {
+    text-decoration: none;
+    color: $font-color-secondary;
+  }
+}
