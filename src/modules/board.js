@@ -8,16 +8,17 @@ export default class board {
   }
 
 
+  changeName(newName) {
+    this.name = newName;
+  }
+  
+  
   addList(list) {
     this.lists.push(list);
   }
 
   removeList(listPosition) {
     this.lists.splice(listPosition, 1);
-  }
-
-  changeName(newName) {
-    this.name = newName;
   }
 
   moveList(oldPosition, newPosition) {

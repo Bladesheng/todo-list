@@ -7,6 +7,11 @@ export default class list {
     this.cards = [];
   }
 
+  
+  changeName(newName) {
+    this.name = newName;
+  }
+
 
   addCard(card) {
     this.cards.push(card);
@@ -14,10 +19,6 @@ export default class list {
 
   removeCard(cardPosition) {
     this.cards.splice(cardPosition, 1);
-  }
-
-  changeName(newName) {
-    this.name = newName;
   }
 
   moveCard(oldPosition, newPosition) {

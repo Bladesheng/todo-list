@@ -16,7 +16,5 @@ export default class card {
 
   changePriority(newPriority) {
     this.priority = newPriority;
-  }
-
-  
+  }  
 }
