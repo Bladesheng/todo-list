@@ -1,7 +1,7 @@
-import board from "./board";
-import list from "./list";
-import card from "./card";
-import storage from "./storage";
+import Board from "./Board";
+import List from "./List";
+import Card from "./Card";
+import Storage from "./Storage";
 
 export default class UI {
   static currentBoard;
@@ -9,9 +9,9 @@ export default class UI {
   static init() {
     const newBoardBtn = document.querySelector("button");
     newBoardBtn.addEventListener("click", () => {
-      storage.createBoard(prompt("Enter new board name:"));
+      Storage.createBoard(prompt("Enter new board name:"));
 
-      console.log(storage.boards);
+      console.log(Storage.boards);
     })
 
     

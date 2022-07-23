@@ -1,6 +1,6 @@
 import { arrayMove } from "./functions";
 
-export default class board {
+export default class Board {
   constructor(name) {
     this.name = name;
 

@@ -1,8 +1,8 @@
-import board from "./board";
-import list from "./list";
-import card from "./card";
+import Board from "./Board";
+import List from "./List";
+import Card from "./Card";
 
-export default class storage { 
+export default class Storage { 
   static boards = [];
   static {
     console.log("storage initialized");
@@ -11,24 +11,24 @@ export default class storage {
 
   // boards manipulation
   static createBoard(name) {
-    const newBoard = new board(name);
-    storage.boards.push(newBoard);
+    const newBoard = new Board(name);
+    Storage.boards.push(newBoard);
   }
 
   static changeBoardName(newName, boardIndex) {
-    const board = storage.boards[boardIndex];
+    const board = Storage.boards[boardIndex];
     board.changeName(newName);
   }
 
   static deleteBoard(boardIndex) {
-    storage.boards.splice(boardIndex, 1);
+    Storage.boards.splice(boardIndex, 1);
   }
 
 
   // lists manipulation
   static createList(name, boardIndex) {
     const list = new list(name);
-    storage.boards[boardIndex].addList(list);
+    Storage.boards[boardIndex].addList(list);
   }
 
   static changeListName(newName, listIndex, boardIndex) {
@@ -37,18 +37,18 @@ export default class storage {
   }
   
   static moveList(oldPosition, newPosition, boardIndex) {
-    storage.boards[boardIndex].moveList(oldPosition, newPosition);
+    Storage.boards[boardIndex].moveList(oldPosition, newPosition);
   }
   
   static removeList(listIndex, boardIndex) {
-    storage.boards[boardIndex].removeList(listIndex);
+    Storage.boards[boardIndex].removeList(listIndex);
   }
 
 
   // cards manipulation 
 
   static createCard(name, description, priority, listIndex, boardIndex) {
-    const list = storage.boards[boardIndex[listIndex]];
+    const list = Storage.boards[boardIndex[listIndex]];
 
   }
 

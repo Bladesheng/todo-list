@@ -1,4 +1,4 @@
-export default class card {
+export default class Card {
   constructor(title, description, priority) {
     this.title = title;
     this.description = description;

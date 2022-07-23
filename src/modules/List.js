@@ -1,6 +1,6 @@
 import { arrayMove } from "./functions";
 
-export default class list {
+export default class List {
   constructor(name) {
     this.name = name;
 

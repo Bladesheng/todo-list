@@ -1,13 +1,13 @@
 import "./style.scss";
-import board from "./modules/board";
-import list from "./modules/list";
-import card from "./modules/card";
-import storage from "./modules/storage";
+import Board from "./modules/Board";
+import List from "./modules/List";
+import Card from "./modules/Card";
+import Storage from "./modules/Storage";
 import UI from "./modules/UI";
 
 
 UI.init();
 
-storage.createBoard("some board");
-console.log(storage.boards);
-storage.createList("some list", 0);
+Storage.createBoard("some board");
+console.log(Storage.boards);
+Storage.createList("some list", 0);
