@@ -1,6 +1,7 @@
 import "./style.scss";
 import Storage from "./modules/Storage";
 import UI from "./modules/UI";
+import DOM from "./modules/DOM";
 
 
 UI.init();

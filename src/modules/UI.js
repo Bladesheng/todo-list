@@ -20,6 +20,9 @@ export default class UI {
         DOM.createList(UI.currentBoardIndex, listIndex);
 
         //reconstruct buttons
+        list.cards.forEach((card, cardIndex) => {
+          DOM.createCard(UI.currentBoardIndex, listIndex, cardIndex);
+        })
       }) 
     }
 

@@ -57,4 +57,27 @@ export default class DOM {
     heading.textContent = name;
     list.appendChild(heading);
   }
+
+  static createCard(boardIndex, listIndex, cardIndex) {
+    const list = document.querySelector(`.list[data-index="${listIndex}"]`);
+
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.dataset.index = cardIndex;
+    list.appendChild(card);
+
+    const cardObject = Storage.boards[boardIndex].lists[listIndex].cards[cardIndex];
+
+    const title = document.createElement("h3");
+    title.textContent = cardObject.title;
+    card.appendChild(title);
+
+    const description = document.createElement("p");
+    description.textContent = cardObject.description;
+    card.appendChild(description);
+
+    const priority = document.createElement("p");
+    priority.textContent = cardObject.priority;
+    card.appendChild(priority);
+  }
 }
