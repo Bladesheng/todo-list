@@ -1,6 +1,7 @@
 import Board from "./Board";
 import List from "./List";
 import Card from "./Card";
+import UI from "./UI";
 
 export default class Storage { 
   static boards;
@@ -16,11 +17,13 @@ export default class Storage {
     }
     else {
       Storage.boards = JSON.parse(localStorage.getItem("boards"));
+      UI.currentBoardIndex = localStorage.getItem("lastBoard");
     }
   }
 
   static setLocalStorage() {
     localStorage.setItem("boards", JSON.stringify(Storage.boards))
+    localStorage.setItem("lastBoard", UI.currentBoardIndex);
   }
 
 
@@ -29,6 +32,7 @@ export default class Storage {
     const newBoard = new Board(name);
     Storage.boards.push(newBoard);
     Storage.setLocalStorage();
+    return Storage.boards.length - 1; // return index of the new board
   }
 
   static changeBoardName(newName, boardIndex) {
