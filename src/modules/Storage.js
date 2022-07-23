@@ -12,40 +12,35 @@ export default class Storage {
 
   // local storage
   static getLocalStorage() {
-    if (localStorage.getItem("boards") === null) {
-      Storage.boards = [];
-    }
-    else {
-      //Storage.boards = JSON.parse(localStorage.getItem("boards"));
-
+    Storage.boards = [];
+    if (localStorage.getItem("boards") !== null) { // if boards local storage isn't empty
+      // the json can't store functions, so all the objects need to be remade
+      
+      // recreate board objects
       const jsonBoards = JSON.parse(localStorage.getItem("boards"));
-      const constructedBoards = [];
-
-      // recreates the boards object from the saved json data
       jsonBoards.forEach((jsonBoard) => {
         const board = new Board(jsonBoard.name);
         
+        // recreate list objects
         const jsonLists = jsonBoard.lists;
         jsonLists.forEach((jsonList) => {
           const list = new List(jsonList.name);
-
           board.addList(list);
 
+          // recreate card objects
           const jsonCards = jsonList.cards;
           jsonCards.forEach((jsonCard) => {
             const card = new Card(jsonCard.title, jsonCard.description, jsonCard.priority);
-
             list.addCard(card);
           })
         })
 
-        constructedBoards.push(board);
+        // push the newly created board object straight into storage
+        Storage.boards.push(board);
       })
-      Storage.boards = constructedBoards;
-      console.log(Storage.boards);
-
-
+      
       UI.currentBoardIndex = localStorage.getItem("lastBoard");
+      console.log(Storage.boards);
     }
   }
 
