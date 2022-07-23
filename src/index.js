@@ -11,3 +11,4 @@ UI.init();
 Storage.createBoard("some board");
 console.log(Storage.boards);
 Storage.createList("some list", 0);
+console.log(Storage.boards[0].lists)

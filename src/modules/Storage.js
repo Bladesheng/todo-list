@@ -27,12 +27,12 @@ export default class Storage {
 
   // lists manipulation
   static createList(name, boardIndex) {
-    const list = new list(name);
+    const list = new List(name);
     Storage.boards[boardIndex].addList(list);
   }
 
   static changeListName(newName, listIndex, boardIndex) {
-    const list = storage.boards[boardIndex].lists[listIndex];
+    const list = Storage.boards[boardIndex].lists[listIndex];
     list.changeName(newName);
   }
   
