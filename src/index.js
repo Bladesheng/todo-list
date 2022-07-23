@@ -8,7 +8,11 @@ import UI from "./modules/UI";
 
 UI.init();
 
-Storage.createBoard("some board");
+
+// debug
 console.log(Storage.boards);
+Storage.createBoard("some board");
 Storage.createList("some list", 0);
-console.log(Storage.boards[0].lists)
+Storage.createCard("feed cat", "some food", 69, 0, 0);
+Storage.createCard("feed cat", "some food", 65, 0, 0);
+Storage.changeCardTitle("dont feed cat", 0, 0, 0);

@@ -27,8 +27,9 @@ export default class Storage {
 
   // lists manipulation
   static createList(name, boardIndex) {
+    const board = Storage.boards[boardIndex];
     const list = new List(name);
-    Storage.boards[boardIndex].addList(list);
+    board.addList(list);
   }
 
   static changeListName(newName, listIndex, boardIndex) {
@@ -46,13 +47,34 @@ export default class Storage {
 
 
   // cards manipulation 
-
   static createCard(name, description, priority, listIndex, boardIndex) {
-    const list = Storage.boards[boardIndex[listIndex]];
-
+    const list = Storage.boards[boardIndex].lists[listIndex];
+    const card = new Card(name, description, priority);
+    list.addCard(card);
+  }
+  
+  static removeCard(cardPosition, listIndex, boardIndex) {
+    const list = Storage.boards[boardIndex].lists[listIndex];
+    list.removeCard(cardPosition);
+  }
+  
+  static moveCard(oldPosition, newPosition, listIndex, boardIndex) {
+    const list = Storage.boards[boardIndex].lists[listIndex];
+    list.moveCard(oldPosition, newPosition);
   }
 
-
-
-
+  static changeCardTitle(newTitle, cardIndex, listIndex, boardIndex) {
+    const card = Storage.boards[boardIndex].lists[listIndex].cards[cardIndex];
+    card.changeTitle(newTitle); 
+  }
+  
+  static changeCardDescription(newDescription, cardIndex, listIndex, boardIndex) {
+    const card = Storage.boards[boardIndex].lists[listIndex].cards[cardIndex];
+    card.changeDescription(newDescription);
+  }
+  
+  static changeCardPriority(newPriority, cardIndex, listIndex, boardIndex) {
+    const card = Storage.boards[boardIndex].lists[listIndex].cards[cardIndex];
+    card.changePriority(newPriority);
+  }
 }
