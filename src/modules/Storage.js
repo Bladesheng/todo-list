@@ -6,7 +6,6 @@ export default class Storage {
   static boards;
   static {
     Storage.getLocalStorage();
-    console.log("storage initialized");
   }
 
 

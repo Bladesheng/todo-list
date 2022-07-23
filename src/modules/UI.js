@@ -1,6 +1,3 @@
-import Board from "./Board";
-import List from "./List";
-import Card from "./Card";
 import Storage from "./Storage";
 
 export default class UI {
