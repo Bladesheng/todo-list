@@ -16,7 +16,35 @@ export default class Storage {
       Storage.boards = [];
     }
     else {
-      Storage.boards = JSON.parse(localStorage.getItem("boards"));
+      //Storage.boards = JSON.parse(localStorage.getItem("boards"));
+
+      const jsonBoards = JSON.parse(localStorage.getItem("boards"));
+      const constructedBoards = [];
+
+      // recreates the boards object from the saved json data
+      jsonBoards.forEach((jsonBoard) => {
+        const board = new Board(jsonBoard.name);
+        
+        const jsonLists = jsonBoard.lists;
+        jsonLists.forEach((jsonList) => {
+          const list = new List(jsonList.name);
+
+          board.addList(list);
+
+          const jsonCards = jsonList.cards;
+          jsonCards.forEach((jsonCard) => {
+            const card = new Card(jsonCard.title, jsonCard.description, jsonCard.priority);
+
+            list.addCard(card);
+          })
+        })
+
+        constructedBoards.push(board);
+      })
+      Storage.boards = constructedBoards;
+      console.log(Storage.boards);
+
+
       UI.currentBoardIndex = localStorage.getItem("lastBoard");
     }
   }
