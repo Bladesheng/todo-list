@@ -7,10 +7,8 @@ UI.init();
 
 
 // debug
-console.log(Storage.boards);
 
-//Storage.createBoard("some board3");
-// Storage.createList("some list", 0);
-// Storage.createCard("feed cat", "some food", 69, 0, 0);
-// Storage.createCard("feed cat", "some food", 65, 0, 0);
-// Storage.changeCardTitle("dont feed cat", 0, 0, 0);
+//Storage.createList("test list 2", 2);
+//Storage.createCard("test card", "some description", 3, 0, 2);
+
+//Storage.changeCardTitle("feed cat", 0, 0, 1);

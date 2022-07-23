@@ -43,4 +43,18 @@ export default class DOM {
   static removeBoard() {
     DOM.currentBoard.textContent = "";
   }
+
+  static createList(boardIndex, listIndex) {
+    const board = document.querySelector(".board");
+
+    const list = document.createElement("div");
+    list.classList.add("list");
+    list.dataset.index = listIndex;
+    board.appendChild(list);
+
+    const heading = document.createElement("h2");
+    const name = Storage.boards[boardIndex].lists[listIndex].name;
+    heading.textContent = name;
+    list.appendChild(heading);
+  }
 }
