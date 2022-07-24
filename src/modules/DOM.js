@@ -50,18 +50,27 @@ export default class DOM {
 
     const renameBtn = document.createElement("button");
     renameBtn.classList.add("rename");
-    renameBtn.dataset.index = boardIndex;
     renameBtn.textContent = "Rename board";
+    renameBtn.addEventListener("click", () => {
+      const newName = prompt("Enter new board name");
+      const heading = DOM.currentBoard.querySelector("h1");
+      heading.textContent = newName;
+
+      const boardIndex = UI.currentBoardIndex;
+      const boardLink = document.querySelector(`.sidebar>button[data-index="${boardIndex}"]`);
+      boardLink.textContent = newName;
+
+      Storage.changeBoardName(newName, boardIndex);
+    })
     DOM.currentBoard.appendChild(renameBtn);
 
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete");
-    deleteBtn.dataset.index = boardIndex;
     deleteBtn.textContent = "Delete board";
-    deleteBtn.addEventListener("click", (e) => {
+    deleteBtn.addEventListener("click", () => {
       DOM.wipeBoard();
 
-      const boardIndex = e.target.dataset.index;
+      const boardIndex = UI.currentBoardIndex;
       const boardLink = document.querySelector(`.sidebar>button[data-index="${boardIndex}"]`);
       boardLink.remove();
 
