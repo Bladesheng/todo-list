@@ -19,11 +19,12 @@ export default class DOM {
     DOM.sidebar.appendChild(boardBtn);
 
     boardBtn.addEventListener("click", (e) => {
-      // update and save new board index
-      UI.currentBoardIndex = e.target.dataset.index;
+      const boardIndex = e.target.dataset.index;
+      // update and save new current board index
+      UI.currentBoardIndex = boardIndex;
       Storage.setLocalStorage(); 
 
-      DOM.createBoard(e.target.dataset.index);
+      DOM.constructBoard(boardIndex);
     })
   }
 
@@ -79,5 +80,22 @@ export default class DOM {
     const priority = document.createElement("p");
     priority.textContent = cardObject.priority;
     card.appendChild(priority);
+  }
+
+  // constructs the whole board, including all lists and cards
+  static constructBoard(boardIndex) {
+    // reconstruct last selected board
+    DOM.createBoard(boardIndex);
+
+    //reconstruct lists
+    const currentBoard = Storage.boards[boardIndex];
+    currentBoard.lists.forEach((list, listIndex) => {
+      DOM.createList(boardIndex, listIndex);
+
+      //reconstruct cards
+      list.cards.forEach((card, cardIndex) => {
+        DOM.createCard(boardIndex, listIndex, cardIndex);
+      })
+    }) 
   }
 }

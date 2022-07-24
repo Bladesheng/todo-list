@@ -11,19 +11,7 @@ export default class UI {
         DOM.createBoardBtn(boardIndex);
       })
 
-      // reconstruct last selected board
-      DOM.createBoard(UI.currentBoardIndex);
-
-      //reconstruct lists
-      const currentBoard = Storage.boards[UI.currentBoardIndex];
-      currentBoard.lists.forEach((list, listIndex) => {
-        DOM.createList(UI.currentBoardIndex, listIndex);
-
-        //reconstruct buttons
-        list.cards.forEach((card, cardIndex) => {
-          DOM.createCard(UI.currentBoardIndex, listIndex, cardIndex);
-        })
-      }) 
+      DOM.constructBoard(UI.currentBoardIndex);
     }
 
 
