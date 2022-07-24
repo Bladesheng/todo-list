@@ -9,8 +9,20 @@ export default class DOM {
     DOM.currentBoard = document.querySelector(".currentBoard");
     DOM.sidebar = document.querySelector(".sidebar");
   }
+
+
+  static updateIndexes(parentNode) {
+    // everytime you delete/move element in DOM, the indexes
+    // need to be updated to match the storage
+    // to prevent indexes going: "0, 1, 3, 4, 5"
+    const elements = parentNode.querySelectorAll("[data-index]")
+    elements.forEach((element, newIndex) => {
+      element.dataset.index = newIndex;
+    })
+  }
   
 
+  // boards manipulation
   static createBoardBtn(boardIndex) {
     const boardBtn = document.createElement("button");
     const name = Storage.boards[boardIndex].name;
@@ -29,12 +41,43 @@ export default class DOM {
   }
 
   static createBoard(boardIndex) {
-    DOM.removeBoard()
+    DOM.wipeBoard()
 
     const heading = document.createElement("h1");
     const name = Storage.boards[boardIndex].name;
     heading.textContent = name;
     DOM.currentBoard.appendChild(heading);
+
+    const renameBtn = document.createElement("button");
+    renameBtn.classList.add("rename");
+    renameBtn.dataset.index = boardIndex;
+    renameBtn.textContent = "Rename board";
+    DOM.currentBoard.appendChild(renameBtn);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("delete");
+    deleteBtn.dataset.index = boardIndex;
+    deleteBtn.textContent = "Delete board";
+    deleteBtn.addEventListener("click", (e) => {
+      DOM.wipeBoard();
+
+      const boardIndex = e.target.dataset.index;
+      const boardLink = document.querySelector(`.sidebar>button[data-index="${boardIndex}"]`);
+      boardLink.remove();
+
+      // to prevent staying at undefined index when
+      // when last item is deleted
+      UI.currentBoardIndex = Storage.boards.length - 2;
+      if (UI.currentBoardIndex < 0) {
+        UI.currentBoardIndex = undefined;
+      }
+
+      DOM.updateIndexes(DOM.sidebar);
+
+      Storage.deleteBoard(boardIndex);
+    })
+    DOM.currentBoard.appendChild(deleteBtn);
+
 
     const board = document.createElement("div");
     board.classList.add("board");
@@ -42,10 +85,29 @@ export default class DOM {
     DOM.currentBoard.appendChild(board);
   }
 
-  static removeBoard() {
+  static wipeBoard() {
     DOM.currentBoard.textContent = "";
   }
 
+  // constructs the whole board, including all lists and cards
+  static constructBoard(boardIndex) {
+    // reconstruct last selected board
+    DOM.createBoard(boardIndex);
+
+    //reconstruct lists
+    const currentBoard = Storage.boards[boardIndex];
+    currentBoard.lists.forEach((list, listIndex) => {
+      DOM.createList(boardIndex, listIndex);
+
+      //reconstruct cards
+      list.cards.forEach((card, cardIndex) => {
+        DOM.createCard(boardIndex, listIndex, cardIndex);
+      })
+    }) 
+  }
+
+
+  // lists manipulation
   static createList(boardIndex, listIndex) {
     const board = document.querySelector(".board");
 
@@ -60,6 +122,8 @@ export default class DOM {
     list.appendChild(heading);
   }
 
+
+  // cards manipulation 
   static createCard(boardIndex, listIndex, cardIndex) {
     const list = document.querySelector(`.list[data-index="${listIndex}"]`);
 
@@ -81,22 +145,5 @@ export default class DOM {
     const priority = document.createElement("p");
     priority.textContent = cardObject.priority;
     card.appendChild(priority);
-  }
-
-  // constructs the whole board, including all lists and cards
-  static constructBoard(boardIndex) {
-    // reconstruct last selected board
-    DOM.createBoard(boardIndex);
-
-    //reconstruct lists
-    const currentBoard = Storage.boards[boardIndex];
-    currentBoard.lists.forEach((list, listIndex) => {
-      DOM.createList(boardIndex, listIndex);
-
-      //reconstruct cards
-      list.cards.forEach((card, cardIndex) => {
-        DOM.createCard(boardIndex, listIndex, cardIndex);
-      })
-    }) 
   }
 }

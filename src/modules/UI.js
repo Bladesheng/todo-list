@@ -5,7 +5,7 @@ export default class UI {
   static currentBoardIndex;
 
   static init() {
-    if (localStorage.getItem("boards") !== null) {
+    if (localStorage.getItem("boards") !== null && localStorage.getItem("boards") !== "[]") {
       // reconstruct board links (in sidebar) from local storage
       Storage.boards.forEach((board, boardIndex) => {
         DOM.createBoardBtn(boardIndex);
