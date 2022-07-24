@@ -87,6 +87,10 @@ main {
           border-radius: 5px;
         }
       }
+
+      button.newList {
+        order: 1; // the button should always be last
+      }
     }
   }
 

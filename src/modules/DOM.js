@@ -44,8 +44,8 @@ export default class DOM {
     DOM.wipeBoard()
 
     const heading = document.createElement("h1");
-    const name = Storage.boards[boardIndex].name;
-    heading.textContent = name;
+    const boardName = Storage.boards[boardIndex].name;
+    heading.textContent = boardName;
     DOM.currentBoard.appendChild(heading);
 
     const renameBtn = document.createElement("button");
@@ -92,6 +92,18 @@ export default class DOM {
     board.classList.add("board");
     board.dataset.index = boardIndex;
     DOM.currentBoard.appendChild(board);
+
+    const newListBtn = document.createElement("button");
+    newListBtn.classList.add("newList");
+    newListBtn.textContent = "Add another list";
+    newListBtn.addEventListener("click", () => {
+      const listName = prompt("Enter new list name");
+      Storage.createList(listName, UI.currentBoardIndex);
+      
+      const newListIndex = Storage.boards[UI.currentBoardIndex].lists.length - 1;
+      DOM.createList(UI.currentBoardIndex, newListIndex);
+    })
+    board.appendChild(newListBtn);
   }
 
   static wipeBoard() {
