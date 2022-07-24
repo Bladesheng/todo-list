@@ -140,6 +140,12 @@ export default class DOM {
     const heading = document.createElement("h2");
     const name = Storage.boards[boardIndex].lists[listIndex].name;
     heading.textContent = name;
+    heading.addEventListener("click", (e) => {
+      const newName = prompt("Enter new list name");
+      heading.textContent = newName;
+
+      Storage.changeListName(newName, list.dataset.index, UI.currentBoardIndex);
+    })
     list.appendChild(heading);
   }
 
