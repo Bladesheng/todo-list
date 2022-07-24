@@ -30,15 +30,16 @@ export default class DOM {
 
   static createBoard(boardIndex) {
     DOM.removeBoard()
-    const board = document.createElement("div");
-    board.classList.add("board");
-    board.dataset.index = boardIndex;
-    DOM.currentBoard.appendChild(board);
 
     const heading = document.createElement("h1");
     const name = Storage.boards[boardIndex].name;
     heading.textContent = name;
-    board.appendChild(heading);
+    DOM.currentBoard.appendChild(heading);
+
+    const board = document.createElement("div");
+    board.classList.add("board");
+    board.dataset.index = boardIndex;
+    DOM.currentBoard.appendChild(board);
   }
 
   static removeBoard() {

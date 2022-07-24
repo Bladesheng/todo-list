@@ -5,12 +5,12 @@
 }
 
 $font-stack: 'Roboto', sans-serif;
-$font-color-primary: rgb(211, 211, 211);
+$font-color-primary: rgb(199, 196, 189);
 $font-color-secondary: rgb(25, 66, 146);
 
-$color-primary: rgb(95, 95, 95);
-$color-secondary: rgb(206, 177, 132);
-$color-dark: rgb(28, 8, 5);
+$color-primary: rgb(26, 28, 30);
+$color-secondary: rgb(24, 26, 27);
+$color-light: rgb(34, 37, 38);
 
 
 html {
@@ -41,16 +41,64 @@ header {
 main {
   width: 100vw;
   flex: 1 1 auto;
-  display: flex;
+
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  grid-template-rows: 1fr auto;
+
+  .sidebar {
+    grid-row: 1 / 3;
+
+    display: flex;
+    flex-direction: column;
+
+  }
+
+
+  .currentBoard {
+    flex: 1 1 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: black;
+    padding: 10px;
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+
+      .list {
+        background-color: $color-light;
+        border-radius: 5px;
+        padding: 5px;
+
+        h2 {
+          font-size: 1rem;
+        } 
+
+        .card {
+          background-color: $color-secondary;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+
+
+
+
 }
 
 
 footer {
-  flex: 0 1 auto;
+  grid-column: 2 / 3;
   
   text-align: center;
   padding: 0.8rem;
   font-size: 0.8rem;
+  background-color: black;
 
   a {
     text-decoration: none;
