@@ -148,6 +148,22 @@ export default class DOM {
     })
     list.appendChild(heading);
 
+    const newCardBtn = document.createElement("button");
+    newCardBtn.classList.add("newCard");
+    newCardBtn.textContent = "Add a card";
+    newCardBtn.addEventListener("click", () => {
+      const cardName = prompt("Enter new card name");
+      const cardDescription = prompt("Enter card description");
+      const cardPriority = prompt("Enter card priority");
+
+      const listIndex = list.dataset.index;
+      Storage.createCard(cardName, cardDescription, cardPriority, listIndex, UI.currentBoardIndex);
+
+      const newCardIndex = Storage.boards[UI.currentBoardIndex].lists[listIndex].cards.length - 1;
+      DOM.createCard(UI.currentBoardIndex, listIndex, newCardIndex);
+    })
+    list.appendChild(newCardBtn);
+
     const removeListBtn = document.createElement("button");
     removeListBtn.classList.add("removeCard");
     removeListBtn.textContent = "X";
