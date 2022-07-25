@@ -14,22 +14,17 @@ export default class UI {
       DOM.constructBoard(UI.currentBoardIndex);
     }
 
-
-    const newBoardBtn = document.querySelector("button");
-    newBoardBtn.addEventListener("click", () => {
-      const userInput = prompt("Enter new board name:");
-
+    
+    const newBoardBtn = document.querySelector("button.newBoard");
+    const newBoardInput = document.querySelector("input.newBoard");
+    DOM.attachInputListener(newBoardBtn, newBoardInput, () => {
+      const userInput = newBoardInput.value;
       const boardIndex = Storage.createBoard(userInput);
       DOM.createBoardBtn(boardIndex);
-  
+      
       UI.currentBoardIndex = boardIndex;
       Storage.setLocalStorage(); // to save the new current board index
-
       console.log(Storage.boards);
-    })   
-  }
-
-  static changeBoard(newBoardPosition) {
-    UI.currentBoardIndex = newBoardPosition;
+    });
   }
 }

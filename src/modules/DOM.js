@@ -20,6 +20,49 @@ export default class DOM {
       element.dataset.index = newIndex;
     })
   }
+
+
+  static attachInputListener(textElement, inputElement, processCallback) {
+    // Event listener that dynamically swaps visibility of
+    // text element to input element when you click on text element.
+    // When you lose focus or press enter, it executes the callback
+    // funtion and swaps back to text element.
+    textElement.addEventListener("click", () => {
+      function sendInput() {
+        if (inputElement.value !== "") {
+          textElement.classList.remove("active");
+          inputElement.classList.remove("active");
+          
+          processCallback();
+          inputElement.value = "";
+        }
+        else {
+          textElement.classList.remove("active");
+          inputElement.classList.remove("active");
+        }
+      }
+      
+      // hides the text, shows the input and focuses it
+      textElement.classList.add("active");
+      inputElement.classList.add("active");
+      inputElement.focus();
+
+      // when you lose focus by clicking somewhere outside the input
+      inputElement.onblur = () => {
+        sendInput();
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          sendInput();
+        }
+        if (e.key === "Escape") {
+          inputElement.value = "";
+          sendInput();
+        }
+      })
+    })
+  }
   
 
   // boards manipulation

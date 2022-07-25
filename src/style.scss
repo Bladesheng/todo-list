@@ -52,6 +52,20 @@ main {
     display: flex;
     flex-direction: column;
 
+    .newBoard {
+      order: 1;
+    }
+
+    button.newBoard.active {
+      display: none;
+    }
+
+    input.newBoard {
+      display: none;
+    }
+    input.newBoard.active {
+      display: inline-block;
+    }
   }
 
 
