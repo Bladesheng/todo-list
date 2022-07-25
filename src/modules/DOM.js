@@ -15,7 +15,7 @@ export default class DOM {
     // everytime you delete/move element in DOM, the indexes
     // need to be updated to match the storage
     // to prevent indexes going: "0, 1, 3, 4, 5"
-    const elements = parentNode.querySelectorAll("[data-index]")
+    const elements = parentNode.querySelectorAll(":scope > [data-index]")
     elements.forEach((element, newIndex) => {
       element.dataset.index = newIndex;
     })
