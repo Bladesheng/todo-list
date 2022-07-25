@@ -137,16 +137,22 @@ export default class DOM {
     DOM.currentBoard.appendChild(board);
 
     const newListBtn = document.createElement("button");
-    newListBtn.classList.add("newList");
+    const newListInput = document.createElement("input");
+    newListBtn.classList.add("newList", "dynamicText");
     newListBtn.textContent = "Add another list";
-    newListBtn.addEventListener("click", () => {
-      const listName = prompt("Enter new list name");
+    board.appendChild(newListBtn);
+    
+    newListInput.setAttribute("type", "text");
+    newListInput.classList.add("newList", "dynamicInput");
+    board.appendChild(newListInput);
+
+    DOM.attachInputListener(newListBtn, newListInput, () => {
+      const listName = newListInput.value;
       Storage.createList(listName, UI.currentBoardIndex);
-      
+
       const newListIndex = Storage.boards[UI.currentBoardIndex].lists.length - 1;
       DOM.createList(UI.currentBoardIndex, newListIndex);
     })
-    board.appendChild(newListBtn);
   }
 
   static wipeBoard() {

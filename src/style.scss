@@ -46,26 +46,28 @@ main {
   grid-template-columns: 1fr 6fr;
   grid-template-rows: 1fr auto;
 
+
+  .dynamicText,
+  .dynamicInput {
+    order: 1;
+  }
+
+  .dynamicText.active {
+    display: none;
+  }
+
+  .dynamicInput {
+    display: none;
+  }
+  .dynamicInput.active {
+    display: inline-block;
+  }
+
   .sidebar {
     grid-row: 1 / 3;
 
     display: flex;
     flex-direction: column;
-
-    .newBoard {
-      order: 1;
-    }
-
-    button.newBoard.active {
-      display: none;
-    }
-
-    input.newBoard {
-      display: none;
-    }
-    input.newBoard.active {
-      display: inline-block;
-    }
   }
 
 
