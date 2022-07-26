@@ -90,7 +90,7 @@ export default class DOM {
     const boardName = Storage.boards[boardIndex].name;
     heading.textContent = boardName;
     DOM.currentBoard.appendChild(heading);
-    
+
 
     const renameBtn = document.createElement("button");
     const renameInput = document.createElement("input");
@@ -195,6 +195,11 @@ export default class DOM {
     list.dataset.index = listIndex;
     board.appendChild(list);
 
+    const moveBackBtn = document.createElement("button");
+    moveBackBtn.textContent = "<";
+    moveBackBtn.classList.add("moveBackBtn");
+    list.appendChild(moveBackBtn);
+
     const heading = document.createElement("h2");
     const name = Storage.boards[boardIndex].lists[listIndex].name;
     heading.textContent = name;
@@ -206,24 +211,35 @@ export default class DOM {
     })
     list.appendChild(heading);
 
-    const newCardBtn = document.createElement("button");
-    newCardBtn.classList.add("newCard");
-    newCardBtn.textContent = "Add a card";
-    newCardBtn.addEventListener("click", () => {
-      const cardName = prompt("Enter new card name");
-      const cardDescription = prompt("Enter card description");
-      const cardPriority = prompt("Enter card priority");
+    const moveForwardBtn = document.createElement("button");
+    moveForwardBtn.textContent = ">";
+    moveForwardBtn.classList.add("moveForwardBtn");
+    list.appendChild(moveForwardBtn);
 
+    const newCardBtn = document.createElement("button");
+    const newCardInput = document.createElement("input");
+    newCardBtn.classList.add("newCard", "dynamicText");
+    newCardBtn.textContent = "Add a card";
+    list.appendChild(newCardBtn);
+    
+    newCardInput.setAttribute("type", "text");
+    newCardInput.classList.add("newCardInput", "dynamicInput");
+    list.appendChild(newCardInput);
+    
+    DOM.attachInputListener(newCardBtn, newCardInput, () => {
+      const cardName = newCardInput.value;
+      const cardDescription = "";
+      const cardPriority = "";
+  
       const listIndex = list.dataset.index;
       Storage.createCard(cardName, cardDescription, cardPriority, listIndex, UI.currentBoardIndex);
-
+  
       const newCardIndex = Storage.boards[UI.currentBoardIndex].lists[listIndex].cards.length - 1;
       DOM.createCard(UI.currentBoardIndex, listIndex, newCardIndex);
     })
-    list.appendChild(newCardBtn);
 
     const removeListBtn = document.createElement("button");
-    removeListBtn.classList.add("removeCard");
+    removeListBtn.classList.add("removeList");
     removeListBtn.textContent = "X";
     removeListBtn.addEventListener("click", () => {
       list.remove();
@@ -251,12 +267,12 @@ export default class DOM {
     title.textContent = cardObject.title;
     card.appendChild(title);
 
-    const description = document.createElement("p");
-    description.textContent = cardObject.description;
-    card.appendChild(description);
+    // const description = document.createElement("p");
+    // description.textContent = cardObject.description;
+    // card.appendChild(description);
 
-    const priority = document.createElement("p");
-    priority.textContent = cardObject.priority;
-    card.appendChild(priority);
+    // const priority = document.createElement("p");
+    // priority.textContent = cardObject.priority;
+    // card.appendChild(priority);
   }
 }

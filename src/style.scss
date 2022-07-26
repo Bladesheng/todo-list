@@ -95,6 +95,10 @@ main {
       gap: 10px;
 
       .list {
+        display: grid;
+        grid-template-columns: 1rem 1fr 1rem;
+        grid-row-gap: 10px;
+
         background-color: $color-light;
         border-radius: 5px;
         padding: 5px;
@@ -106,8 +110,21 @@ main {
         } 
 
         .card {
+          grid-column: 1 / 4;
+
           background-color: $color-secondary;
           border-radius: 5px;
+        }
+
+        .newCard,
+        .newCardInput {
+          grid-column: 1 / 3;
+          order: 1;
+        }
+
+        .removeList {
+          grid-column: 3 / 4;
+          order: 1;
         }
       }
 
