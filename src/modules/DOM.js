@@ -90,22 +90,31 @@ export default class DOM {
     const boardName = Storage.boards[boardIndex].name;
     heading.textContent = boardName;
     DOM.currentBoard.appendChild(heading);
+    
 
     const renameBtn = document.createElement("button");
-    renameBtn.classList.add("rename");
+    const renameInput = document.createElement("input");
+
+    renameBtn.classList.add("rename", "dynamicText");
     renameBtn.textContent = "Rename board";
-    renameBtn.addEventListener("click", () => {
-      const newName = prompt("Enter new board name");
+    DOM.currentBoard.appendChild(renameBtn);
+
+    renameInput.setAttribute("type", "text")
+    renameInput.classList.add("dynamicInput");
+    DOM.currentBoard.appendChild(renameInput);
+    
+    DOM.attachInputListener(renameBtn, renameInput, () => {
+      const newName = renameInput.value;    
       const heading = DOM.currentBoard.querySelector("h1");
       heading.textContent = newName;
-
+  
       const boardIndex = UI.currentBoardIndex;
       const boardLink = document.querySelector(`.sidebar>button[data-index="${boardIndex}"]`);
       boardLink.textContent = newName;
-
+  
       Storage.changeBoardName(newName, boardIndex);
     })
-    DOM.currentBoard.appendChild(renameBtn);
+
 
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete");

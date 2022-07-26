@@ -81,6 +81,11 @@ main {
     background-color: black;
     padding: 10px;
 
+    >.dynamicText,
+    >.dynamicInput {
+      order: 0;
+    }
+
     .board {
       grid-column: 1 / 4;
       align-self: start;
