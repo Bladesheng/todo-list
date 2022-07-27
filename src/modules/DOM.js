@@ -201,16 +201,25 @@ export default class DOM {
     list.appendChild(moveBackBtn);
 
     const heading = document.createElement("h2");
+    const headingInput = document.createElement("input");
     const name = Storage.boards[boardIndex].lists[listIndex].name;
+    heading.classList.add("dynamicText");
     heading.textContent = name;
     heading.addEventListener("click", () => {
-      const newName = prompt("Enter new list name");
-      heading.textContent = newName;
-
-      Storage.changeListName(newName, list.dataset.index, UI.currentBoardIndex);
     })
     list.appendChild(heading);
-
+    
+    headingInput.setAttribute("type", "text");
+    headingInput.classList.add("headingInput", "dynamicInput");
+    list.appendChild(headingInput);
+    
+    DOM.attachInputListener(heading, headingInput, () => {
+      const newName = headingInput.value;
+      heading.textContent = newName;
+  
+      Storage.changeListName(newName, list.dataset.index, UI.currentBoardIndex);  
+    })
+    
     const moveForwardBtn = document.createElement("button");
     moveForwardBtn.textContent = ">";
     moveForwardBtn.classList.add("moveForwardBtn");
