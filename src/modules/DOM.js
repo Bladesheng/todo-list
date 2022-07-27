@@ -63,6 +63,28 @@ export default class DOM {
       })
     })
   }
+
+
+  static moveListListener(directionBtn) {
+    directionBtn.addEventListener("click", () => {
+      const list = directionBtn.parentNode;
+      const listIndex = parseInt(list.dataset.index);
+      const lists = document.querySelectorAll(".list");
+      const direction = directionBtn.classList[0];
+
+      // also makes sure you don't exceed array range
+      if (direction === "moveBackBtn" && listIndex > 0) {
+        Storage.moveList(listIndex, listIndex - 1, UI.currentBoardIndex);
+        list.parentNode.insertBefore(list, lists[listIndex - 1]);
+      }
+      else if (direction === "moveForwardBtn" && listIndex < lists.length) {
+        Storage.moveList(listIndex, listIndex + 1, UI.currentBoardIndex);
+        list.parentNode.insertBefore(list, lists[listIndex + 2]);
+      }      
+
+      DOM.updateIndexes(list.parentNode);
+    })
+  }
   
 
   // boards manipulation
@@ -198,6 +220,7 @@ export default class DOM {
     const moveBackBtn = document.createElement("button");
     moveBackBtn.textContent = "<";
     moveBackBtn.classList.add("moveBackBtn");
+    DOM.moveListListener(moveBackBtn);
     list.appendChild(moveBackBtn);
 
     const heading = document.createElement("h2");
@@ -223,6 +246,7 @@ export default class DOM {
     const moveForwardBtn = document.createElement("button");
     moveForwardBtn.textContent = ">";
     moveForwardBtn.classList.add("moveForwardBtn");
+    DOM.moveListListener(moveForwardBtn);
     list.appendChild(moveForwardBtn);
 
     const newCardBtn = document.createElement("button");
