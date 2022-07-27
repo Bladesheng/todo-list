@@ -86,7 +86,30 @@ export default class DOM {
     })
   }
   
+  
+  static moveCardListener(directionBtn) {
+    directionBtn.addEventListener("click", () => {
+      const card = directionBtn.parentNode;
+      const cardIndex = parseInt(card.dataset.index);
+      const cards = document.querySelectorAll(".card");
+      const listIndex = parseInt(card.parentNode.dataset.index);
+      const direction = directionBtn.classList[0];
 
+      // also makes sure you don't exceed array range
+      if (direction === "moveUpBtn" && cardIndex > 0) {
+        Storage.moveCard(cardIndex, cardIndex - 1, listIndex, UI.currentBoardIndex);
+        card.parentNode.insertBefore(card, cards[cardIndex - 1]);
+      }
+      else if (direction === "moveDownBtn" && cardIndex < cards.length) {
+        Storage.moveCard(cardIndex, cardIndex + 1, listIndex, UI.currentBoardIndex);
+        card.parentNode.insertBefore(card, cards[cardIndex + 2]);
+      }      
+
+      DOM.updateIndexes(card.parentNode);
+    })
+  }
+
+  
   // boards manipulation
   static createBoardBtn(boardIndex) {
     const boardBtn = document.createElement("button");
@@ -218,7 +241,7 @@ export default class DOM {
     board.appendChild(list);
 
     const moveBackBtn = document.createElement("button");
-    moveBackBtn.textContent = "<";
+    moveBackBtn.textContent = "←";
     moveBackBtn.classList.add("moveBackBtn");
     DOM.moveListListener(moveBackBtn);
     list.appendChild(moveBackBtn);
@@ -244,7 +267,7 @@ export default class DOM {
     })
     
     const moveForwardBtn = document.createElement("button");
-    moveForwardBtn.textContent = ">";
+    moveForwardBtn.textContent = "→";
     moveForwardBtn.classList.add("moveForwardBtn");
     DOM.moveListListener(moveForwardBtn);
     list.appendChild(moveForwardBtn);
@@ -299,6 +322,18 @@ export default class DOM {
     const title = document.createElement("h3");
     title.textContent = cardObject.title;
     card.appendChild(title);
+
+    const moveUpBtn = document.createElement("button");
+    moveUpBtn.textContent = "⠀↑⠀";
+    moveUpBtn.classList.add("moveUpBtn");
+    DOM.moveCardListener(moveUpBtn);
+    card.appendChild(moveUpBtn);
+    
+    const moveDownBtn = document.createElement("button");
+    moveDownBtn.textContent = "⠀↓⠀";
+    moveDownBtn.classList.add("moveDownBtn");
+    DOM.moveCardListener(moveDownBtn);
+    card.appendChild(moveDownBtn);
 
     // const description = document.createElement("p");
     // description.textContent = cardObject.description;

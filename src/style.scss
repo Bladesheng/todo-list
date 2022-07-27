@@ -118,8 +118,26 @@ main {
         .card {
           grid-column: 1 / 4;
 
+          display: grid;
+          grid-template-columns: 1fr auto;
+          grid-template-rows: 1fr 1fr;
+
           background-color: $color-secondary;
           border-radius: 5px;
+
+          h3 {
+            grid-column: 1 / 2;
+            grid-row: 1 / 3;
+          }
+          .moveUpBtn {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+          }
+          .moveDownBtn {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+          }
+
         }
 
         .newCard,
