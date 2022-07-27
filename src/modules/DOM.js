@@ -91,7 +91,7 @@ export default class DOM {
     directionBtn.addEventListener("click", () => {
       const card = directionBtn.parentNode;
       const cardIndex = parseInt(card.dataset.index);
-      const cards = document.querySelectorAll(".card");
+      const cards = card.parentNode.querySelectorAll(".card");
       const listIndex = parseInt(card.parentNode.dataset.index);
       const direction = directionBtn.classList[0];
 
