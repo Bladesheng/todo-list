@@ -22,7 +22,7 @@ export default class DOM {
   }
 
 
-  static attachInputListener(textElement, inputElement, processCallback) {
+  static attachInputListener(textElement, inputElement, processCallback, wipeInput = true) {
     // Event listener that dynamically swaps visibility of
     // text element to input element when you click on text element.
     // When you lose focus or press enter, it executes the callback
@@ -34,7 +34,7 @@ export default class DOM {
           inputElement.classList.remove("active");
           
           processCallback();
-          inputElement.value = "";
+          if (wipeInput) {inputElement.value = ""}; // wipe out the input by default, so you always start fresh
         }
         else {
           textElement.classList.remove("active");
@@ -57,7 +57,7 @@ export default class DOM {
           sendInput();
         }
         if (e.key === "Escape") {
-          inputElement.value = "";
+          if (wipeInput) {inputElement.value = ""};
           sendInput();
         }
       })
@@ -318,10 +318,101 @@ export default class DOM {
     list.appendChild(card);
 
     const cardObject = Storage.boards[boardIndex].lists[listIndex].cards[cardIndex];
-
-    const title = document.createElement("h3");
+    
+    
+    const title = document.createElement("h3"); // the clickable "card" part of the card
     title.textContent = cardObject.title;
+    
+    // show modal when card is clicked
+    title.addEventListener("click", () => {
+      const modal = document.querySelector(".modalWrapper");
+      const cardIndex = card.dataset.index;
+      const listIndex = list.dataset.index;
+
+      // populate the modal with current card's properties
+      // and fill inputs with the properties too
+      const cardTitleText = modal.querySelector("h2.title");
+      const cardTitleInput = modal.querySelector("input.title");
+      cardTitleText.textContent = cardObject.title;
+      cardTitleInput.value = cardObject.title;
+
+      const cardDescriptionText = modal.querySelector("p.description.dynamicText");
+      const cardDescriptionInput = modal.querySelector("textarea.description");
+      cardDescriptionText.textContent = cardObject.description;
+      cardDescriptionInput.value = cardObject.description;
+
+      const cardPriorityText = modal.querySelector("span.priority");
+      const cardPriorityInput = modal.querySelector("input.priority");
+      cardPriorityText.textContent = cardObject.priority;
+      cardPriorityInput.value = cardObject.priority;
+
+      // make modal visible
+      modal.style.display = "flex";
+      
+
+      // dynamic input for title
+      DOM.attachInputListener(cardTitleText, cardTitleInput, () => {
+        const newTitle = cardTitleInput.value;
+
+        // change card title in modal
+        cardTitleText.textContent = newTitle;
+
+        // change card title in list
+        title.textContent = newTitle;
+
+        // update storage
+        Storage.changeCardTitle(newTitle, cardIndex, listIndex, UI.currentBoardIndex);
+      }, false)
+      
+      
+      // dynamic input for description
+      DOM.attachInputListener(cardDescriptionText, cardDescriptionInput, () => {
+        const newDescription = cardDescriptionInput.value;
+        
+        // change description in modal
+        cardDescriptionText.textContent = newDescription;
+        
+        // update storage
+        Storage.changeCardDescription(newDescription, cardIndex, listIndex, UI.currentBoardIndex);
+      }, false)
+
+
+      // dynamic input for priority
+      DOM.attachInputListener(cardPriorityText, cardPriorityInput, () => {
+        const newPriority = cardPriorityInput.value;
+
+        // change priority in modal
+        cardPriorityText.textContent = newPriority;
+
+        // update storage
+        Storage.changeCardPriority(newPriority, cardIndex, listIndex, UI.currentBoardIndex);
+      }, false)
+
+
+      // delete card button
+      const deleteBtn = modal.querySelector(".delete")
+      deleteBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+
+        // delete card from list in DOM
+        list.removeChild(card);
+
+        // update storage
+        Storage.removeCard(cardIndex, listIndex, UI.currentBoardIndex);
+      })
+    })
+
+    // close modal when you click outside of modal or the "X" button
+    window.addEventListener("click", (e) => {
+      const modal = document.querySelector(".modalWrapper");
+      const closeBtn = modal.querySelector(".close");
+      if (e.target === modal || e.target === closeBtn) {
+        modal.style.display = "none";
+      }
+    })
+
     card.appendChild(title);
+
 
     const moveUpBtn = document.createElement("button");
     moveUpBtn.textContent = "⠀↑⠀";
@@ -334,13 +425,5 @@ export default class DOM {
     moveDownBtn.classList.add("moveDownBtn");
     DOM.moveCardListener(moveDownBtn);
     card.appendChild(moveDownBtn);
-
-    // const description = document.createElement("p");
-    // description.textContent = cardObject.description;
-    // card.appendChild(description);
-
-    // const priority = document.createElement("p");
-    // priority.textContent = cardObject.priority;
-    // card.appendChild(priority);
   }
 }

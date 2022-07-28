@@ -10,8 +10,28 @@
   </style>
 </head>
 <body>
-  <header>
+  <div class="modalWrapper">
+    <div class="modal">
+      <h2 class="title dynamicText">placeholder-title</h2>
+      <input class="dynamicInput title" type="text">
+      
+      <button class="close">X</button>
+      
+      <div class="description">Description</div>
+      <p class="description dynamicText"></p>
+      <textarea type="text" class="description dynamicInput" placeholder="Add a more detailed description..."></textarea>
+      
+      <div class="priority">Priority</div>
+      <span class="priority dynamicText"></span>
+      <input type="number" class="priority dynamicInput">
 
+      <button class="delete">🗑️</button>
+    </div>
+  </div>
+   
+
+  <header>
+    <h1>To-Do List</h1>
   </header>
 
 
@@ -29,7 +49,5 @@
       <p>Built by <a href="https://github.com/Bladesheng">Bladesheng</a></p>
     </footer>
   </main>
-
-
 </body>
 </html>
