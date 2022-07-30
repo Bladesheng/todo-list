@@ -4,10 +4,17 @@ import Storage from "./Storage";
 export default class DOM {
   static currentBoard;
   static sidebar;
+  static svgArrowsPaths;
 
   static {
     DOM.currentBoard = document.querySelector(".currentBoard");
     DOM.sidebar = document.querySelector(".sidebar");
+    DOM.svgArrowsPaths = [ // up, right, down, left
+      "M15,20H9V12H4.16L12,4.16L19.84,12H15V20Z",
+      "M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z",
+      "M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z",
+      "M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z"
+    ]
   }
 
 
@@ -110,6 +117,20 @@ export default class DOM {
     })
   }
 
+
+  static createSVG(customPath) {
+    const SVG_NS = "http://www.w3.org/2000/svg"; 
+    const SVG_Element = document.createElementNS(SVG_NS, "svg");
+    SVG_Element.setAttribute("viewBox", "0 0 24 24");
+  
+    const SVG_Path_Element = document.createElementNS(SVG_NS, "path");
+    SVG_Path_Element.setAttribute("fill", "currentColor");
+    SVG_Path_Element.setAttribute("d", customPath);
+    SVG_Element.appendChild(SVG_Path_Element);
+  
+    return SVG_Element;
+  }
+
   
   // boards manipulation
   static createBoardBtn(boardIndex) {
@@ -190,7 +211,7 @@ export default class DOM {
     const newListBtn = document.createElement("button");
     const newListInput = document.createElement("input");
     newListBtn.classList.add("newList", "dynamicText");
-    newListBtn.textContent = "Add another list";
+    newListBtn.textContent = "+ Add another list";
     board.appendChild(newListBtn);
     
     newListInput.setAttribute("type", "text");
@@ -238,7 +259,9 @@ export default class DOM {
     board.appendChild(list);
 
     const moveBackBtn = document.createElement("button");
-    moveBackBtn.textContent = "←";
+    moveBackBtn.appendChild(
+      DOM.createSVG(DOM.svgArrowsPaths[3])
+    );
     moveBackBtn.classList.add("moveBackBtn");
     DOM.moveListListener(moveBackBtn);
     list.appendChild(moveBackBtn);
@@ -265,7 +288,9 @@ export default class DOM {
     }, false)
     
     const moveForwardBtn = document.createElement("button");
-    moveForwardBtn.textContent = "→";
+    moveForwardBtn.appendChild(
+      DOM.createSVG(DOM.svgArrowsPaths[1])
+    );
     moveForwardBtn.classList.add("moveForwardBtn");
     DOM.moveListListener(moveForwardBtn);
     list.appendChild(moveForwardBtn);
@@ -413,13 +438,17 @@ export default class DOM {
 
 
     const moveUpBtn = document.createElement("button");
-    moveUpBtn.textContent = "⠀↑⠀";
+    moveUpBtn.appendChild(
+      DOM.createSVG(DOM.svgArrowsPaths[0])
+    );
     moveUpBtn.classList.add("moveUpBtn");
     DOM.moveCardListener(moveUpBtn);
     card.appendChild(moveUpBtn);
     
     const moveDownBtn = document.createElement("button");
-    moveDownBtn.textContent = "⠀↓⠀";
+    moveDownBtn.appendChild(
+      DOM.createSVG(DOM.svgArrowsPaths[2])
+    );
     moveDownBtn.classList.add("moveDownBtn");
     DOM.moveCardListener(moveDownBtn);
     card.appendChild(moveDownBtn);
