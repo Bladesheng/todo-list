@@ -145,7 +145,7 @@ export default class DOM {
     DOM.currentBoard.appendChild(renameBtn);
 
     renameInput.setAttribute("type", "text")
-    renameInput.classList.add("dynamicInput");
+    renameInput.classList.add("rename", "dynamicInput");
     DOM.currentBoard.appendChild(renameInput);
     
     DOM.attachInputListener(renameBtn, renameInput, () => {
