@@ -131,24 +131,20 @@ export default class DOM {
   static createBoard(boardIndex) {
     DOM.wipeBoard()
 
-    const heading = document.createElement("h1");
     const boardName = Storage.boards[boardIndex].name;
+
+    const heading = document.createElement("h1");
+    const renameInput = document.createElement("input");
+    heading.classList.add("dynamicText");
     heading.textContent = boardName;
     DOM.currentBoard.appendChild(heading);
 
-
-    const renameBtn = document.createElement("button");
-    const renameInput = document.createElement("input");
-
-    renameBtn.classList.add("rename", "dynamicText");
-    renameBtn.textContent = "Rename board";
-    DOM.currentBoard.appendChild(renameBtn);
-
     renameInput.setAttribute("type", "text")
     renameInput.classList.add("rename", "dynamicInput");
+    renameInput.value = boardName;
     DOM.currentBoard.appendChild(renameInput);
     
-    DOM.attachInputListener(renameBtn, renameInput, () => {
+    DOM.attachInputListener(heading, renameInput, () => {
       const newName = renameInput.value;    
       const heading = DOM.currentBoard.querySelector("h1");
       heading.textContent = newName;
@@ -158,7 +154,7 @@ export default class DOM {
       boardLink.textContent = newName;
   
       Storage.changeBoardName(newName, boardIndex);
-    })
+    }, false)
 
 
     const deleteBtn = document.createElement("button");
