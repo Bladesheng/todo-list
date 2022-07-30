@@ -57,8 +57,9 @@ export default class DOM {
           sendInput();
         }
         if (e.key === "Escape") {
-          if (wipeInput) {inputElement.value = ""};
+          inputElement.value = "";
           sendInput();
+          inputElement.value = textElement.textContent;
         }
       })
     })
@@ -253,6 +254,7 @@ export default class DOM {
     
     headingInput.setAttribute("type", "text");
     headingInput.classList.add("headingInput", "dynamicInput");
+    headingInput.value = name;
     list.appendChild(headingInput);
     
     DOM.attachInputListener(heading, headingInput, () => {
@@ -260,7 +262,7 @@ export default class DOM {
       heading.textContent = newName;
   
       Storage.changeListName(newName, list.dataset.index, UI.currentBoardIndex);  
-    })
+    }, false)
     
     const moveForwardBtn = document.createElement("button");
     moveForwardBtn.textContent = "→";
