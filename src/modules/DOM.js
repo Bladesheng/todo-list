@@ -298,7 +298,7 @@ export default class DOM {
     const newCardBtn = document.createElement("button");
     const newCardInput = document.createElement("input");
     newCardBtn.classList.add("newCard", "dynamicText");
-    newCardBtn.textContent = "Add a card";
+    newCardBtn.textContent = "+ Add a card";
     list.appendChild(newCardBtn);
     
     newCardInput.setAttribute("type", "text");
