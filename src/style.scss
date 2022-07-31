@@ -308,6 +308,7 @@ main {
           order: 1;
           height: 40px;
           padding-left: 0.3em;
+          margin-right: 0.3em;
           
           text-align: start;
           font-size: 1rem;
@@ -323,6 +324,16 @@ main {
         .removeList {
           grid-column: 3 / 4;
           order: 1;
+          justify-self: center;
+
+          background: none;
+          border: none;
+          color: $font-color-primary;
+          cursor: pointer;
+
+          svg {
+            height: 1.3rem;
+          }
         }
 
         .moveBackBtn,
