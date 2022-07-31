@@ -15,6 +15,26 @@ export default class DOM {
       "M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z",
       "M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z"
     ]
+
+    // horizontal mouse scrolling
+    window.addEventListener("wheel", function (e) {
+      const container = document.querySelector("main");
+      if (e.deltaY > 0) container.scrollLeft += 100;
+      else container.scrollLeft -= 100;
+    });
+
+    // close modal when you click outside of modal or the "X" button
+    const modalWrapper = document.querySelector(".modalWrapper");
+    modalWrapper.addEventListener("click", (e) => {
+      if (e.target === modalWrapper) {
+        modalWrapper.style.display = "none";
+      }
+    })
+    
+    const closeBtn = modalWrapper.querySelector(".close");
+    closeBtn.addEventListener("click", () => {
+      modalWrapper.style.display = "none";
+    })
   }
 
 
@@ -415,7 +435,8 @@ export default class DOM {
 
 
       // delete card button
-      const deleteBtn = modal.querySelector(".delete")
+      const deleteBtn = modal.querySelector(".delete")//
+      console.log(deleteBtn);
       deleteBtn.addEventListener("click", () => {
         modal.style.display = "none";
 
@@ -427,14 +448,6 @@ export default class DOM {
       })
     })
 
-    // close modal when you click outside of modal or the "X" button
-    window.addEventListener("click", (e) => {
-      const modal = document.querySelector(".modalWrapper");
-      const closeBtn = modal.querySelector(".close");
-      if (e.target === modal || e.target === closeBtn) {
-        modal.style.display = "none";
-      }
-    })
 
     card.appendChild(title);
 
