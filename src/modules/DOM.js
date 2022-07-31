@@ -5,6 +5,7 @@ export default class DOM {
   static currentBoard;
   static sidebar;
   static svgArrowsPaths;
+  static lastCard;
 
   static {
     DOM.currentBoard = document.querySelector(".currentBoard");
@@ -39,6 +40,13 @@ export default class DOM {
     })
 
 
+    // modal - delete card button
+    const deleteBtn = modalWrapper.querySelector(".delete")//
+    deleteBtn.addEventListener("click", () => {
+      DOM.deleteCurrentCard();
+    })
+
+
     // textarea automatic resizing
     const modalTextarea = document.querySelector("textarea.description");
     modalTextarea.addEventListener("focus", () => {
@@ -55,6 +63,22 @@ export default class DOM {
         resize();
       }
     })
+  }
+
+  static deleteCurrentCard() {
+    const modalWrapper = document.querySelector(".modalWrapper");
+    const list = DOM.lastCard.parentNode;
+    const cardIndex = DOM.lastCard.dataset.index;
+    const listIndex = list.dataset.index;
+    const boardIndex = list.parentNode.dataset.index;
+
+    modalWrapper.style.display = "none";
+
+    // delete card from list in DOM
+    list.removeChild(DOM.lastCard);
+
+    // update storage
+    Storage.removeCard(cardIndex, listIndex, boardIndex);
   }
 
 
@@ -389,10 +413,13 @@ export default class DOM {
     title.textContent = cardObject.title;
     
     // show modal when card is clicked
-    title.addEventListener("click", () => {
+    title.addEventListener("click", (e) => {
       const modal = document.querySelector(".modalWrapper");
       const cardIndex = card.dataset.index;
       const listIndex = list.dataset.index;
+
+      // update the last clicked card
+      DOM.lastCard = e.target.parentNode;
 
       // populate the modal with current card's properties
       // and fill inputs with the properties too
@@ -457,19 +484,6 @@ export default class DOM {
         // update storage
         Storage.changeCardPriority(newPriority, cardIndex, listIndex, UI.currentBoardIndex);
       }, false) */
-
-
-      // delete card button
-      const deleteBtn = modal.querySelector(".delete")//
-      deleteBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-
-        // delete card from list in DOM
-        list.removeChild(card);
-
-        // update storage
-        Storage.removeCard(cardIndex, listIndex, UI.currentBoardIndex);
-      })
     })
 
 
