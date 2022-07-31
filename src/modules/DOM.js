@@ -16,12 +16,14 @@ export default class DOM {
       "M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z"
     ]
 
+
     // horizontal mouse scrolling
     window.addEventListener("wheel", function (e) {
       const container = document.querySelector("main");
       if (e.deltaY > 0) container.scrollLeft += 100;
       else container.scrollLeft -= 100;
     });
+
 
     // close modal when you click outside of modal or the "X" button
     const modalWrapper = document.querySelector(".modalWrapper");
@@ -34,6 +36,24 @@ export default class DOM {
     const closeBtn = modalWrapper.querySelector(".close");
     closeBtn.addEventListener("click", () => {
       modalWrapper.style.display = "none";
+    })
+
+
+    // textarea automatic resizing
+    const modalTextarea = document.querySelector("textarea.description");
+    modalTextarea.addEventListener("focus", () => {
+      function resize() {
+        modalTextarea.style.height = "";
+        modalTextarea.style.height = modalTextarea.scrollHeight + 6 + "px";
+      }
+
+      // initial resize on focus
+      resize();
+
+      // resize automatically when typing
+      modalTextarea.oninput = () => {
+        resize();
+      }
     })
   }
 
@@ -385,6 +405,9 @@ export default class DOM {
       const cardDescriptionInput = modal.querySelector("textarea.description");
       cardDescriptionText.textContent = cardObject.description;
       cardDescriptionInput.value = cardObject.description;
+      if (cardObject.description === "") {
+        cardDescriptionText.textContent = "Add a more detailed description...";
+      }
 
       const cardPriorityText = modal.querySelector("span.priority");
       const cardPriorityInput = modal.querySelector("input.priority");
@@ -436,7 +459,6 @@ export default class DOM {
 
       // delete card button
       const deleteBtn = modal.querySelector(".delete")//
-      console.log(deleteBtn);
       deleteBtn.addEventListener("click", () => {
         modal.style.display = "none";
 
