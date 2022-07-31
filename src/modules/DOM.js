@@ -409,10 +409,11 @@ export default class DOM {
         cardDescriptionText.textContent = "Add a more detailed description...";
       }
 
-      const cardPriorityText = modal.querySelector("span.priority");
+      // feature frozen for now
+/*    const cardPriorityText = modal.querySelector("span.priority");
       const cardPriorityInput = modal.querySelector("input.priority");
       cardPriorityText.textContent = cardObject.priority;
-      cardPriorityInput.value = cardObject.priority;
+      cardPriorityInput.value = cardObject.priority; */
 
       // make modal visible
       modal.style.display = "flex";
@@ -445,7 +446,8 @@ export default class DOM {
       }, false)
 
 
-      // dynamic input for priority
+      // feature frozen for now
+/*    // dynamic input for priority
       DOM.attachInputListener(cardPriorityText, cardPriorityInput, () => {
         const newPriority = cardPriorityInput.value;
 
@@ -454,7 +456,7 @@ export default class DOM {
 
         // update storage
         Storage.changeCardPriority(newPriority, cardIndex, listIndex, UI.currentBoardIndex);
-      }, false)
+      }, false) */
 
 
       // delete card button

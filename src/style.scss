@@ -77,7 +77,7 @@ input {
 
     display: grid;
     grid-template-columns: 1fr 1.5rem;
-    grid-template-rows: 1.5rem 1rem auto 1rem 1.3rem;
+    grid-template-rows: 1.5rem 1rem auto 1.3rem;
     row-gap: 1rem;
 
     width: 65vw;
@@ -129,7 +129,7 @@ input {
       resize: none; // prevent user from resizing textarea manually
     }
     
-    div.priority {
+    /*div.priority { // feature frozen for now
       grid-column: 1 / 2;
       grid-row: 4 / 5;
     }
@@ -142,10 +142,10 @@ input {
     input.priority {
       grid-column: 2 / 3;
       grid-row: 4 / 5;
-    }
+    } */
    
     .delete {
-      grid-row: 5 / 6;
+      grid-row: 4 / 5;
       grid-column: 2 / 3;
 
       background: none;
