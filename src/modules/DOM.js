@@ -47,6 +47,10 @@ export default class DOM {
     })
 
 
+    // modal - dynamic input for title
+    DOM.modalTitleListener();
+
+
     // textarea automatic resizing
     const modalTextarea = document.querySelector("textarea.description");
     modalTextarea.addEventListener("focus", () => {
@@ -65,6 +69,8 @@ export default class DOM {
     })
   }
 
+
+  // for deleting current card from modal
   static deleteCurrentCard() {
     const modalWrapper = document.querySelector(".modalWrapper");
     const list = DOM.lastCard.parentNode;
@@ -79,6 +85,32 @@ export default class DOM {
 
     // update storage
     Storage.removeCard(cardIndex, listIndex, boardIndex);
+  }
+
+
+  static modalTitleListener() {
+    const cardTitleText = document.querySelector("h2.title");
+    const cardTitleInput = document.querySelector("input.title");
+
+    DOM.attachInputListener(cardTitleText, cardTitleInput, () => {
+      const newTitle = cardTitleInput.value;
+
+      const list = DOM.lastCard.parentNode;
+      const cardIndex = DOM.lastCard.dataset.index;
+      const listIndex = list.dataset.index;
+      const boardIndex = list.parentNode.dataset.index;
+
+      const title = DOM.lastCard.querySelector("h3");
+
+      // change card title in modal
+      cardTitleText.textContent = newTitle;
+
+      // change card title in list
+      title.textContent = newTitle;
+
+      // update storage
+      Storage.changeCardTitle(newTitle, cardIndex, listIndex, boardIndex);
+    }, false)
   }
 
 
@@ -436,29 +468,12 @@ export default class DOM {
         cardDescriptionText.textContent = "Add a more detailed description...";
       }
 
-      // feature frozen for now
-/*    const cardPriorityText = modal.querySelector("span.priority");
-      const cardPriorityInput = modal.querySelector("input.priority");
-      cardPriorityText.textContent = cardObject.priority;
-      cardPriorityInput.value = cardObject.priority; */
 
       // make modal visible
       modal.style.display = "flex";
       
 
-      // dynamic input for title
-      DOM.attachInputListener(cardTitleText, cardTitleInput, () => {
-        const newTitle = cardTitleInput.value;
 
-        // change card title in modal
-        cardTitleText.textContent = newTitle;
-
-        // change card title in list
-        title.textContent = newTitle;
-
-        // update storage
-        Storage.changeCardTitle(newTitle, cardIndex, listIndex, UI.currentBoardIndex);
-      }, false)
       
       
       // dynamic input for description
@@ -473,17 +488,6 @@ export default class DOM {
       }, false)
 
 
-      // feature frozen for now
-/*    // dynamic input for priority
-      DOM.attachInputListener(cardPriorityText, cardPriorityInput, () => {
-        const newPriority = cardPriorityInput.value;
-
-        // change priority in modal
-        cardPriorityText.textContent = newPriority;
-
-        // update storage
-        Storage.changeCardPriority(newPriority, cardIndex, listIndex, UI.currentBoardIndex);
-      }, false) */
     })
 
 

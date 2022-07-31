@@ -154,21 +154,6 @@ input {
 
       resize: none; // prevent user from resizing textarea manually
     }
-    
-    /*div.priority { // feature frozen for now
-      grid-column: 1 / 2;
-      grid-row: 4 / 5;
-    }
-    span.priority {
-      grid-column: 2 / 3;
-      grid-row: 4 / 5;
-
-      border: 1px solid red;
-    }
-    input.priority {
-      grid-column: 2 / 3;
-      grid-row: 4 / 5;
-    } */
    
     .delete {
       grid-row: 4 / 5;
@@ -491,7 +476,7 @@ footer {
       grid-template-columns: 330px 1.5rem;
     }
   }
-  
+
 
   main {
     grid-template-columns: 200px auto;

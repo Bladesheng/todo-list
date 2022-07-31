@@ -26,5 +26,29 @@ export default class UI {
       Storage.setLocalStorage(); // to save the new current board index
       console.log(Storage.boards);
     });
+
+    // modal dynamic input for title
+    // const modalWrapper = document.querySelector(".modalWrapper");
+    // const cardTitleText = modalWrapper.querySelector("h2.title");
+    // const cardTitleInput = modalWrapper.querySelector("input.title");
+    // DOM.attachInputListener(cardTitleText, cardTitleInput, () => {
+    //   const newTitle = cardTitleInput.value;
+
+    //   const list = DOM.lastCard.parentNode;
+    //   const cardIndex = DOM.lastCard.dataset.index;
+    //   const listIndex = list.dataset.index;
+    //   const boardIndex = list.parentNode.dataset.index;
+
+    //   const title = DOM.lastCard.querySelector("h3");
+
+    //   // change card title in modal
+    //   cardTitleText.textContent = newTitle;
+
+    //   // change card title in list
+    //   title.textContent = newTitle;
+
+    //   // update storage
+    //   Storage.changeCardTitle(newTitle, cardIndex, listIndex, boardIndex);
+    // }, false)
   }
 }
