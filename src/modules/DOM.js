@@ -41,10 +41,7 @@ export default class DOM {
 
 
     // modal - delete card button
-    const deleteBtn = modalWrapper.querySelector(".delete")//
-    deleteBtn.addEventListener("click", () => {
-      DOM.deleteCurrentCard();
-    })
+    DOM.modalDeleteListener();
 
 
     // modal - dynamic input for title
@@ -71,20 +68,23 @@ export default class DOM {
 
 
   // for deleting current card from modal
-  static deleteCurrentCard() {
-    const modalWrapper = document.querySelector(".modalWrapper");
-    const list = DOM.lastCard.parentNode;
-    const cardIndex = DOM.lastCard.dataset.index;
-    const listIndex = list.dataset.index;
-    const boardIndex = list.parentNode.dataset.index;
-
-    modalWrapper.style.display = "none";
-
-    // delete card from list in DOM
-    list.removeChild(DOM.lastCard);
-
-    // update storage
-    Storage.removeCard(cardIndex, listIndex, boardIndex);
+  static modalDeleteListener() {
+    const deleteBtn = document.querySelector(".modal>.delete")//
+    deleteBtn.addEventListener("click", () => {
+      const list = DOM.lastCard.parentNode;
+      const cardIndex = DOM.lastCard.dataset.index;
+      const listIndex = list.dataset.index;
+      const boardIndex = list.parentNode.dataset.index;
+      
+      const modalWrapper = document.querySelector(".modalWrapper");
+      modalWrapper.style.display = "none";
+  
+      // delete card from list in DOM
+      list.removeChild(DOM.lastCard);
+  
+      // update storage
+      Storage.removeCard(cardIndex, listIndex, boardIndex);
+    })
   }
 
 
