@@ -483,3 +483,27 @@ footer {
     color: $font-color-secondary;
   }
 }
+
+
+@media (min-width:600px) {
+  .modalWrapper { 
+    .modal {
+      grid-template-columns: 330px 1.5rem;
+    }
+  }
+  
+
+  main {
+    grid-template-columns: 200px auto;
+
+    .currentBoard {
+      .board {
+        grid-auto-columns: 290px;
+    
+        .list {
+          grid-template-columns: 1rem calc(290px - 2rem - 10px) 1rem;
+        }
+      }
+    }
+  }
+}
