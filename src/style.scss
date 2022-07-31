@@ -76,20 +76,37 @@ input {
     border-radius: 5px;
 
     display: grid;
-    grid-template-columns: 1fr 1.5rem;
-    grid-template-rows: 1.5rem 1rem auto 1.3rem;
+    grid-template-columns: 55vw 1.5rem;
+    grid-template-rows: 3rem 1rem auto 1.3rem;
     row-gap: 1rem;
+    align-items: center;
 
-    width: 65vw;
 
 
     h2.title {
       grid-column: 1 / 2;
       grid-row: 1 / 2;
+
+      
     }
     input.title {
       grid-column: 1 / 2;
       grid-row: 1 / 2;
+
+      padding: 0.2em;
+      
+      background-color: $color-secondary;
+      border: 2px solid $color-focus-blue;
+      border-radius: 3px;
+      outline: none;
+      
+      color: $font-color-primary;
+      font-family: $font-stack;
+      font-size: 1.5rem;
+      font-weight: 600;
+
+      // to prevent the text from moving when you begin editing
+      margin-left: -0.284em;
     }
 
     button.close {
@@ -110,15 +127,24 @@ input {
     p.description.dynamicText {
       grid-column: 1 / 3;
       grid-row: 3 / 4;
+      
+      padding: 0.69em 0;
+      padding-right: 0.5em;
+      padding-top: 0.69em;
     }
     textarea.description {
       grid-column: 1 / 3;
       grid-row: 3 / 4;
-
+      
       padding: 0.5em;
+      margin-left: -0.63em;
+      position: relative;
+      top: 1px;
+      left: 0.1px;
 
       background-color: $color-secondary;
       border: 2px solid $color-focus-blue;
+      border-radius: 3px;
       outline: none;
     
       color: $font-color-primary;
@@ -217,7 +243,11 @@ main {
       font-weight: 400;
     }
 
-    input {
+    input.newBoard {
+      position: relative;
+      right: 2px;
+      bottom: 2px;
+
       background-color: $color-focus-dark;
       outline: none;
       border: 2px solid $color-focus-blue;
@@ -286,8 +316,9 @@ main {
 
       .list {
         display: grid;
-        grid-template-columns: 1rem 1fr 1rem;
+        grid-template-columns: 1rem calc(50vw - 2rem - 10px) 1rem;
         grid-row-gap: 10px;
+        align-items: center;
 
         height: fit-content;
         padding: 5px;
@@ -299,6 +330,7 @@ main {
           grid-column: 2 / 3;
           grid-row: 1 / 2;
           margin: 0em 0.5em;
+          padding: 0.125em 0em;
 
           font-size: 1rem;
           font-weight: 500;
@@ -307,6 +339,17 @@ main {
         .headingInput {
           grid-column: 2 / 3;
           grid-row: 1 / 2;
+          padding: 0em 0.37em;
+
+          background-color: $color-secondary;
+          color: $font-color-primary;
+          font-family: $font-stack;
+          font-weight: 500;
+          font-size: 1rem;
+
+          outline: none;
+          border: 2px solid $color-focus-blue;
+          border-radius: 3px;
         } 
 
         .card {
@@ -424,10 +467,6 @@ main {
       }
     }
   }
-
-
-
-
 }
 
 
