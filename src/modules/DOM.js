@@ -34,15 +34,14 @@ export default class DOM {
       }
     })
     
+    // modal - close modal button
     const closeBtn = modalWrapper.querySelector(".close");
     closeBtn.addEventListener("click", () => {
       modalWrapper.style.display = "none";
     })
 
-
     // modal - delete card button
     DOM.modalDeleteListener();
-
 
     // modal - dynamic input for title
     DOM.modalTitleListener();
@@ -129,7 +128,7 @@ export default class DOM {
     // Event listener that dynamically swaps visibility of
     // text element to input element when you click on text element.
     // When you lose focus or press enter, it executes the callback
-    // funtion and swaps back to text element.
+    // function and swaps back to text element.
     textElement.addEventListener("click", () => {
       function sendInput() {
         if (inputElement.value !== "") {
@@ -137,7 +136,9 @@ export default class DOM {
           inputElement.classList.remove("active");
           
           processCallback();
-          if (wipeInput) {inputElement.value = ""}; // wipe out the input by default, so you always start fresh
+          if (wipeInput) { // wipe out the input by default, so you always start fresh
+            inputElement.value = "" 
+          };
         }
         else {
           textElement.classList.remove("active");
@@ -162,7 +163,9 @@ export default class DOM {
         if (e.key === "Escape") {
           inputElement.value = "";
           sendInput();
-          inputElement.value = textElement.textContent;
+          if (!wipeInput) { // reset the input to whatever was the previous text
+            inputElement.value = textElement.textContent;
+          }
         }
       }
     })
@@ -367,8 +370,6 @@ export default class DOM {
     const name = Storage.boards[boardIndex].lists[listIndex].name;
     heading.classList.add("dynamicText");
     heading.textContent = name;
-    heading.addEventListener("click", () => {
-    })
     list.appendChild(heading);
     
     headingInput.setAttribute("type", "text");
