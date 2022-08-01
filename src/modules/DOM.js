@@ -155,7 +155,7 @@ export default class DOM {
         sendInput();
       }
 
-      document.addEventListener("keydown", (e) => {
+      inputElement.onkeydown = (e) => {
         if (e.key === "Enter") {
           sendInput();
         }
@@ -164,7 +164,7 @@ export default class DOM {
           sendInput();
           inputElement.value = textElement.textContent;
         }
-      })
+      }
     })
   }
 
