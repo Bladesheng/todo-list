@@ -87,7 +87,7 @@ input {
       grid-column: 1 / 2;
       grid-row: 1 / 2;
 
-      
+      cursor: pointer;
     }
     input.title {
       grid-column: 1 / 2;
@@ -119,6 +119,9 @@ input {
         height: 1.5rem;
       }
     }
+    button.close:hover {
+      filter: brightness(1.3);
+    }
 
     div.description {
       font-weight: 500;
@@ -131,6 +134,8 @@ input {
       padding: 0.69em 0;
       padding-right: 0.5em;
       padding-top: 0.69em;
+
+      cursor: pointer;
     }
     textarea.description {
       grid-column: 1 / 3;
@@ -166,6 +171,9 @@ input {
       svg {
         height: 1.3rem;
       }
+    }
+    .delete:hover {
+      filter: brightness(1.3);
     }
   }
 }
@@ -257,8 +265,13 @@ main {
     }
 
     h1 {
-      font-size: 1.1rem;
       align-self: center;
+      padding: 0.3em;
+
+      font-size: 1.1rem;
+      font-weight: 500;
+
+      cursor: pointer;
     }
 
     button.delete,
@@ -274,6 +287,9 @@ main {
       color: $font-color-primary;
 
       cursor: pointer;
+    }
+    button.delete:hover {
+      filter: brightness(1.3);
     }
 
     input.rename {
@@ -350,8 +366,11 @@ main {
           h3 {
             grid-column: 1 / 2;
             grid-row: 1 / 3;
-            align-self: center;
-            margin: 0.3em;
+            align-self: stretch;
+            padding-left: 0.3em;
+
+            display: flex;
+            align-items: center;
 
             font-size: 1rem;
             font-weight: 400;
@@ -367,6 +386,9 @@ main {
           }
 
         }
+        .card:hover {
+          background-color: rgb(29, 32, 33);
+        }
 
         .newCard,
         .newCardInput {
@@ -381,10 +403,18 @@ main {
           font-weight: 400;
           color: $font-color-primary;
 
-          background-color: $color-secondary;
+          background: none;
           border: none;
           border-radius: 3px;
           outline: none;
+          
+          cursor: pointer;
+        }
+        .newCardInput {
+          background-color: $color-secondary;
+        }
+        .newCard:hover {
+          filter: brightness(1.3);
         }
 
         .removeList {
@@ -400,6 +430,9 @@ main {
           svg {
             height: 1.3rem;
           }
+        }
+        .removeList:hover {
+          filter: brightness(1.3);
         }
 
         .moveBackBtn,
@@ -449,6 +482,9 @@ main {
       input.newList {
         background-color: $color-primary;
         border-radius: 3px;
+      }
+      button.newList:hover {
+        filter: brightness(1.3);
       }
     }
   }
