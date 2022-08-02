@@ -18,7 +18,7 @@ export default class DOM {
       "M15,20H9V12H4.16L12,4.16L19.84,12H15V20Z",
       "M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z",
       "M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z",
-      "M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z",
+      "M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z"
     ];
 
     // horizontal mouse scrolling
@@ -63,6 +63,19 @@ export default class DOM {
       modalTextarea.oninput = () => {
         resize();
       };
+    });
+
+    // show sidebar
+    const hamburgerBtn = document.querySelector("button.burger");
+    const sidebar = document.querySelector(".sidebar");
+
+    hamburgerBtn.addEventListener("click", () => {
+      sidebar.classList.remove("hidden");
+    });
+
+    // hide sidebar
+    DOM.currentBoard.addEventListener("click", () => {
+      sidebar.classList.add("hidden");
     });
   }
 
@@ -441,7 +454,8 @@ export default class DOM {
       );
 
       const newCardIndex =
-        Storage.boards[UI.currentBoardIndex].lists[clickedListIndex].cards.length - 1;
+        Storage.boards[UI.currentBoardIndex].lists[clickedListIndex].cards
+          .length - 1;
       DOM.createCard(UI.currentBoardIndex, clickedListIndex, newCardIndex);
     });
 
