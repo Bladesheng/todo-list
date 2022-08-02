@@ -256,6 +256,53 @@ export default class DOM {
     return SVGElement;
   }
 
+  static createKebabMenu(kebabBtn) {
+    const kebabMenu = document.createElement("div");
+    kebabMenu.classList.add("menu");
+
+    // trash icon "M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Delete this list";
+    removeBtn.classList.add("removeList");
+    kebabMenu.appendChild(removeBtn);
+    kebabBtn.parentNode.appendChild(kebabMenu);
+
+    // delete list button
+    removeBtn.onmousedown = (event) => {
+      // blur event would result in this listener being removed before
+      // execution, so we prevent the blur and execute this listener's callback
+      event.preventDefault();
+
+      // remove the list from DOM and from Storage
+      kebabBtn.parentNode.remove();
+      Storage.removeList(
+        kebabBtn.parentNode.dataset.index,
+        UI.currentBoardIndex
+      );
+
+      const board = document.querySelector(".board");
+      DOM.updateIndexes(board);
+    };
+
+    function closeMenu() {
+      // remove the menu from DOM
+      kebabMenu.remove();
+
+      // add the original listener to kebab button again
+      kebabBtn.onclick = () => {
+        DOM.createKebabMenu(kebabBtn);
+      };
+    }
+    // close menu when you lose focus or click the kebab button again
+    kebabBtn.onblur = () => {
+      closeMenu();
+    };
+
+    kebabBtn.onclick = () => {
+      closeMenu();
+    };
+  }
+
   // boards manipulation
   static createBoardBtn(boardIndex) {
     const boardBtn = document.createElement("button");
@@ -459,21 +506,17 @@ export default class DOM {
       DOM.createCard(UI.currentBoardIndex, clickedListIndex, newCardIndex);
     });
 
-    const removeListBtn = document.createElement("button");
-    removeListBtn.classList.add("removeList");
-    removeListBtn.appendChild(
+    const kebabBtn = document.createElement("button");
+    kebabBtn.classList.add("kebabBtn");
+    kebabBtn.appendChild(
       DOM.createSVG(
-        "M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
+        "M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"
       )
     );
-    removeListBtn.addEventListener("click", () => {
-      list.remove();
-
-      Storage.removeList(list.dataset.index, UI.currentBoardIndex);
-
-      DOM.updateIndexes(board);
-    });
-    list.appendChild(removeListBtn);
+    kebabBtn.onclick = () => {
+      DOM.createKebabMenu(kebabBtn);
+    };
+    list.appendChild(kebabBtn);
   }
 
   // cards manipulation
