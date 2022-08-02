@@ -5,7 +5,6 @@ export default class Card {
     this.priority = priority;
   }
 
-
   changeTitle(newTitle) {
     this.title = newTitle;
   }
@@ -16,5 +15,5 @@ export default class Card {
 
   changePriority(newPriority) {
     this.priority = newPriority;
-  }  
+  }
 }

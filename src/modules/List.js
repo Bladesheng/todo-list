@@ -7,11 +7,9 @@ export default class List {
     this.cards = [];
   }
 
-  
   changeName(newName) {
     this.name = newName;
   }
-
 
   addCard(card) {
     this.cards.push(card);

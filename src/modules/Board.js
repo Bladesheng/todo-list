@@ -7,12 +7,10 @@ export default class Board {
     this.lists = [];
   }
 
-
   changeName(newName) {
     this.name = newName;
   }
-  
-  
+
   addList(list) {
     this.lists.push(list);
   }

@@ -3,28 +3,30 @@ import Storage from "./Storage";
 
 export default class DOM {
   static currentBoard;
+
   static sidebar;
+
   static svgArrowsPaths;
+
   static lastCard;
 
   static {
     DOM.currentBoard = document.querySelector(".currentBoard");
     DOM.sidebar = document.querySelector(".sidebar");
-    DOM.svgArrowsPaths = [ // up, right, down, left
+    DOM.svgArrowsPaths = [
+      // up, right, down, left
       "M15,20H9V12H4.16L12,4.16L19.84,12H15V20Z",
       "M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z",
       "M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z",
-      "M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z"
-    ]
-
+      "M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z",
+    ];
 
     // horizontal mouse scrolling
-    window.addEventListener("wheel", function (e) {
+    window.addEventListener("wheel", (e) => {
       const container = document.querySelector("main");
       if (e.deltaY > 0) container.scrollLeft += 100;
       else container.scrollLeft -= 100;
     });
-
 
     // close modal when you click outside of modal or the "X" button
     const modalWrapper = document.querySelector(".modalWrapper");
@@ -32,13 +34,13 @@ export default class DOM {
       if (e.target === modalWrapper) {
         modalWrapper.style.display = "none";
       }
-    })
-    
+    });
+
     // modal - close modal button
     const closeBtn = modalWrapper.querySelector(".close");
     closeBtn.addEventListener("click", () => {
       modalWrapper.style.display = "none";
-    })
+    });
 
     // modal - delete card button
     DOM.modalDeleteListener();
@@ -46,13 +48,12 @@ export default class DOM {
     // modal - dynamic input for title
     DOM.modalTitleListener();
 
-
     // textarea automatic resizing
     const modalTextarea = document.querySelector("textarea.description");
     modalTextarea.addEventListener("focus", () => {
       function resize() {
         modalTextarea.style.height = "";
-        modalTextarea.style.height = modalTextarea.scrollHeight + 6 + "px";
+        modalTextarea.style.height = `${modalTextarea.scrollHeight + 6} + "px"`;
       }
 
       // initial resize on focus
@@ -61,70 +62,76 @@ export default class DOM {
       // resize automatically when typing
       modalTextarea.oninput = () => {
         resize();
-      }
-    })
+      };
+    });
   }
-
 
   // for deleting current card from modal
   static modalDeleteListener() {
-    const deleteBtn = document.querySelector(".modal>.delete")//
+    const deleteBtn = document.querySelector(".modal>.delete"); //
     deleteBtn.addEventListener("click", () => {
       const list = DOM.lastCard.parentNode;
       const cardIndex = DOM.lastCard.dataset.index;
       const listIndex = list.dataset.index;
       const boardIndex = list.parentNode.dataset.index;
-      
+
       const modalWrapper = document.querySelector(".modalWrapper");
       modalWrapper.style.display = "none";
-  
+
       // delete card from list in DOM
       list.removeChild(DOM.lastCard);
-  
+
       // update storage
       Storage.removeCard(cardIndex, listIndex, boardIndex);
-    })
+    });
   }
-
 
   static modalTitleListener() {
     const cardTitleText = document.querySelector("h2.title");
     const cardTitleInput = document.querySelector("input.title");
 
-    DOM.attachInputListener(cardTitleText, cardTitleInput, () => {
-      const newTitle = cardTitleInput.value;
+    DOM.attachInputListener(
+      cardTitleText,
+      cardTitleInput,
+      () => {
+        const newTitle = cardTitleInput.value;
 
-      const list = DOM.lastCard.parentNode;
-      const cardIndex = DOM.lastCard.dataset.index;
-      const listIndex = list.dataset.index;
-      const boardIndex = list.parentNode.dataset.index;
+        const list = DOM.lastCard.parentNode;
+        const cardIndex = DOM.lastCard.dataset.index;
+        const listIndex = list.dataset.index;
+        const boardIndex = list.parentNode.dataset.index;
 
-      const title = DOM.lastCard.querySelector("h3");
+        const title = DOM.lastCard.querySelector("h3");
 
-      // change card title in modal
-      cardTitleText.textContent = newTitle;
+        // change card title in modal
+        cardTitleText.textContent = newTitle;
 
-      // change card title in list
-      title.textContent = newTitle;
+        // change card title in list
+        title.textContent = newTitle;
 
-      // update storage
-      Storage.changeCardTitle(newTitle, cardIndex, listIndex, boardIndex);
-    }, false)
+        // update storage
+        Storage.changeCardTitle(newTitle, cardIndex, listIndex, boardIndex);
+      },
+      false
+    );
   }
-
 
   static updateIndexes(parentNode) {
     // everytime you delete/move element in DOM, the indexes
     // need to be updated to match the storage
     // to prevent indexes going: "0, 1, 3, 4, 5"
-    const elements = parentNode.querySelectorAll(":scope > [data-index]")
+    const elements = parentNode.querySelectorAll(":scope > [data-index]");
     elements.forEach((element, newIndex) => {
       element.dataset.index = newIndex;
-    })
+    });
   }
 
-
-  static attachInputListener(textElement, inputElement, processCallback, wipeInput = true) {
+  static attachInputListener(
+    textElement,
+    inputElement,
+    processCallback,
+    wipeInput = true
+  ) {
     // Event listener that dynamically swaps visibility of
     // text element to input element when you click on text element.
     // When you lose focus or press enter, it executes the callback
@@ -134,18 +141,18 @@ export default class DOM {
         if (inputElement.value !== "") {
           textElement.classList.remove("active");
           inputElement.classList.remove("active");
-          
+
           processCallback();
-          if (wipeInput) { // wipe out the input by default, so you always start fresh
-            inputElement.value = "" 
-          };
-        }
-        else {
+          if (wipeInput) {
+            // wipe out the input by default, so you always start fresh
+            inputElement.value = "";
+          }
+        } else {
           textElement.classList.remove("active");
           inputElement.classList.remove("active");
         }
       }
-      
+
       // hides the text, shows the input and focuses it
       textElement.classList.add("active");
       inputElement.classList.add("active");
@@ -154,7 +161,7 @@ export default class DOM {
       // when you lose focus by clicking somewhere outside the input
       inputElement.onblur = () => {
         sendInput();
-      }
+      };
 
       inputElement.onkeydown = (e) => {
         if (e.key === "Enter") {
@@ -163,19 +170,19 @@ export default class DOM {
         if (e.key === "Escape") {
           inputElement.value = "";
           sendInput();
-          if (!wipeInput) { // reset the input to whatever was the previous text
+          if (!wipeInput) {
+            // reset the input to whatever was the previous text
             inputElement.value = textElement.textContent;
           }
         }
-      }
-    })
+      };
+    });
   }
-
 
   static moveListListener(directionBtn) {
     directionBtn.addEventListener("click", () => {
       const list = directionBtn.parentNode;
-      const listIndex = parseInt(list.dataset.index);
+      const listIndex = parseInt(list.dataset.index, 10);
       const lists = document.querySelectorAll(".list");
       const direction = directionBtn.classList[0];
 
@@ -183,54 +190,59 @@ export default class DOM {
       if (direction === "moveBackBtn" && listIndex > 0) {
         Storage.moveList(listIndex, listIndex - 1, UI.currentBoardIndex);
         list.parentNode.insertBefore(list, lists[listIndex - 1]);
-      }
-      else if (direction === "moveForwardBtn" && listIndex < lists.length) {
+      } else if (direction === "moveForwardBtn" && listIndex < lists.length) {
         Storage.moveList(listIndex, listIndex + 1, UI.currentBoardIndex);
         list.parentNode.insertBefore(list, lists[listIndex + 2]);
-      }      
+      }
 
       DOM.updateIndexes(list.parentNode);
-    })
+    });
   }
-  
-  
+
   static moveCardListener(directionBtn) {
     directionBtn.addEventListener("click", () => {
       const card = directionBtn.parentNode;
-      const cardIndex = parseInt(card.dataset.index);
+      const cardIndex = parseInt(card.dataset.index, 10);
       const cards = card.parentNode.querySelectorAll(".card");
-      const listIndex = parseInt(card.parentNode.dataset.index);
+      const listIndex = parseInt(card.parentNode.dataset.index, 10);
       const direction = directionBtn.classList[0];
 
       // also makes sure you don't exceed array range
       if (direction === "moveUpBtn" && cardIndex > 0) {
-        Storage.moveCard(cardIndex, cardIndex - 1, listIndex, UI.currentBoardIndex);
+        Storage.moveCard(
+          cardIndex,
+          cardIndex - 1,
+          listIndex,
+          UI.currentBoardIndex
+        );
         card.parentNode.insertBefore(card, cards[cardIndex - 1]);
-      }
-      else if (direction === "moveDownBtn" && cardIndex < cards.length) {
-        Storage.moveCard(cardIndex, cardIndex + 1, listIndex, UI.currentBoardIndex);
+      } else if (direction === "moveDownBtn" && cardIndex < cards.length) {
+        Storage.moveCard(
+          cardIndex,
+          cardIndex + 1,
+          listIndex,
+          UI.currentBoardIndex
+        );
         card.parentNode.insertBefore(card, cards[cardIndex + 2]);
-      }      
+      }
 
       DOM.updateIndexes(card.parentNode);
-    })
+    });
   }
-
 
   static createSVG(customPath) {
-    const SVG_NS = "http://www.w3.org/2000/svg"; 
-    const SVG_Element = document.createElementNS(SVG_NS, "svg");
-    SVG_Element.setAttribute("viewBox", "0 0 24 24");
-  
-    const SVG_Path_Element = document.createElementNS(SVG_NS, "path");
-    SVG_Path_Element.setAttribute("fill", "currentColor");
-    SVG_Path_Element.setAttribute("d", customPath);
-    SVG_Element.appendChild(SVG_Path_Element);
-  
-    return SVG_Element;
+    const SVG_NS = "http://www.w3.org/2000/svg";
+    const SVGElement = document.createElementNS(SVG_NS, "svg");
+    SVGElement.setAttribute("viewBox", "0 0 24 24");
+
+    const SVGPathElement = document.createElementNS(SVG_NS, "path");
+    SVGPathElement.setAttribute("fill", "currentColor");
+    SVGPathElement.setAttribute("d", customPath);
+    SVGElement.appendChild(SVGPathElement);
+
+    return SVGElement;
   }
 
-  
   // boards manipulation
   static createBoardBtn(boardIndex) {
     const boardBtn = document.createElement("button");
@@ -240,17 +252,17 @@ export default class DOM {
     DOM.sidebar.appendChild(boardBtn);
 
     boardBtn.addEventListener("click", (e) => {
-      const boardIndex = e.target.dataset.index;
+      const clickedBoardIndex = e.target.dataset.index;
       // update and save new current board index
-      UI.currentBoardIndex = boardIndex;
-      Storage.setLocalStorage(); 
+      UI.currentBoardIndex = clickedBoardIndex;
+      Storage.setLocalStorage();
 
-      DOM.constructBoard(boardIndex);
-    })
+      DOM.constructBoard(clickedBoardIndex);
+    });
   }
 
   static createBoard(boardIndex) {
-    DOM.wipeBoard()
+    DOM.wipeBoard();
 
     const boardName = Storage.boards[boardIndex].name;
 
@@ -260,23 +272,29 @@ export default class DOM {
     heading.textContent = boardName;
     DOM.currentBoard.appendChild(heading);
 
-    renameInput.setAttribute("type", "text")
+    renameInput.setAttribute("type", "text");
     renameInput.classList.add("rename", "dynamicInput");
     renameInput.value = boardName;
     DOM.currentBoard.appendChild(renameInput);
-    
-    DOM.attachInputListener(heading, renameInput, () => {
-      const newName = renameInput.value;    
-      const heading = DOM.currentBoard.querySelector("h1");
-      heading.textContent = newName;
-  
-      const boardIndex = UI.currentBoardIndex;
-      const boardLink = document.querySelector(`.sidebar>button[data-index="${boardIndex}"]`);
-      boardLink.textContent = newName;
-  
-      Storage.changeBoardName(newName, boardIndex);
-    }, false)
 
+    DOM.attachInputListener(
+      heading,
+      renameInput,
+      () => {
+        const newName = renameInput.value;
+        const clickedHeading = DOM.currentBoard.querySelector("h1");
+        clickedHeading.textContent = newName;
+
+        const clickedBoardIndex = UI.currentBoardIndex;
+        const boardLink = document.querySelector(
+          `.sidebar>button[data-index="${clickedBoardIndex}"]`
+        );
+        boardLink.textContent = newName;
+
+        Storage.changeBoardName(newName, clickedBoardIndex);
+      },
+      false
+    );
 
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete");
@@ -284,8 +302,10 @@ export default class DOM {
     deleteBtn.addEventListener("click", () => {
       DOM.wipeBoard();
 
-      const boardIndex = UI.currentBoardIndex;
-      const boardLink = document.querySelector(`.sidebar>button[data-index="${boardIndex}"]`);
+      const clickedBoardIndex = UI.currentBoardIndex;
+      const boardLink = document.querySelector(
+        `.sidebar>button[data-index="${clickedBoardIndex}"]`
+      );
       boardLink.remove();
 
       // to prevent staying at undefined index when
@@ -297,10 +317,9 @@ export default class DOM {
 
       DOM.updateIndexes(DOM.sidebar);
 
-      Storage.deleteBoard(boardIndex);
-    })
+      Storage.deleteBoard(clickedBoardIndex);
+    });
     DOM.currentBoard.appendChild(deleteBtn);
-
 
     const board = document.createElement("div");
     board.classList.add("board");
@@ -312,7 +331,7 @@ export default class DOM {
     newListBtn.classList.add("newList", "dynamicText");
     newListBtn.textContent = "+ Add another list";
     board.appendChild(newListBtn);
-    
+
     newListInput.setAttribute("type", "text");
     newListInput.classList.add("newList", "dynamicInput");
     board.appendChild(newListInput);
@@ -321,9 +340,10 @@ export default class DOM {
       const listName = newListInput.value;
       Storage.createList(listName, UI.currentBoardIndex);
 
-      const newListIndex = Storage.boards[UI.currentBoardIndex].lists.length - 1;
+      const newListIndex =
+        Storage.boards[UI.currentBoardIndex].lists.length - 1;
       DOM.createList(UI.currentBoardIndex, newListIndex);
-    })
+    });
   }
 
   static wipeBoard() {
@@ -335,18 +355,17 @@ export default class DOM {
     // reconstruct last selected board
     DOM.createBoard(boardIndex);
 
-    //reconstruct lists
+    // reconstruct lists
     const currentBoard = Storage.boards[boardIndex];
     currentBoard.lists.forEach((list, listIndex) => {
       DOM.createList(boardIndex, listIndex);
 
-      //reconstruct cards
+      // reconstruct cards
       list.cards.forEach((card, cardIndex) => {
         DOM.createCard(boardIndex, listIndex, cardIndex);
-      })
-    }) 
+      });
+    });
   }
-
 
   // lists manipulation
   static createList(boardIndex, listIndex) {
@@ -358,9 +377,7 @@ export default class DOM {
     board.appendChild(list);
 
     const moveBackBtn = document.createElement("button");
-    moveBackBtn.appendChild(
-      DOM.createSVG(DOM.svgArrowsPaths[3])
-    );
+    moveBackBtn.appendChild(DOM.createSVG(DOM.svgArrowsPaths[3]));
     moveBackBtn.classList.add("moveBackBtn");
     DOM.moveListListener(moveBackBtn);
     list.appendChild(moveBackBtn);
@@ -371,23 +388,30 @@ export default class DOM {
     heading.classList.add("dynamicText");
     heading.textContent = name;
     list.appendChild(heading);
-    
+
     headingInput.setAttribute("type", "text");
     headingInput.classList.add("headingInput", "dynamicInput");
     headingInput.value = name;
     list.appendChild(headingInput);
-    
-    DOM.attachInputListener(heading, headingInput, () => {
-      const newName = headingInput.value;
-      heading.textContent = newName;
-  
-      Storage.changeListName(newName, list.dataset.index, UI.currentBoardIndex);  
-    }, false)
-    
-    const moveForwardBtn = document.createElement("button");
-    moveForwardBtn.appendChild(
-      DOM.createSVG(DOM.svgArrowsPaths[1])
+
+    DOM.attachInputListener(
+      heading,
+      headingInput,
+      () => {
+        const newName = headingInput.value;
+        heading.textContent = newName;
+
+        Storage.changeListName(
+          newName,
+          list.dataset.index,
+          UI.currentBoardIndex
+        );
+      },
+      false
     );
+
+    const moveForwardBtn = document.createElement("button");
+    moveForwardBtn.appendChild(DOM.createSVG(DOM.svgArrowsPaths[1]));
     moveForwardBtn.classList.add("moveForwardBtn");
     DOM.moveListListener(moveForwardBtn);
     list.appendChild(moveForwardBtn);
@@ -397,40 +421,48 @@ export default class DOM {
     newCardBtn.classList.add("newCard", "dynamicText");
     newCardBtn.textContent = "+ Add a card";
     list.appendChild(newCardBtn);
-    
+
     newCardInput.setAttribute("type", "text");
     newCardInput.classList.add("newCardInput", "dynamicInput");
     list.appendChild(newCardInput);
-    
+
     DOM.attachInputListener(newCardBtn, newCardInput, () => {
       const cardName = newCardInput.value;
       const cardDescription = "";
       const cardPriority = "";
-  
-      const listIndex = list.dataset.index;
-      Storage.createCard(cardName, cardDescription, cardPriority, listIndex, UI.currentBoardIndex);
-  
-      const newCardIndex = Storage.boards[UI.currentBoardIndex].lists[listIndex].cards.length - 1;
-      DOM.createCard(UI.currentBoardIndex, listIndex, newCardIndex);
-    })
+
+      const clickedListIndex = list.dataset.index;
+      Storage.createCard(
+        cardName,
+        cardDescription,
+        cardPriority,
+        clickedListIndex,
+        UI.currentBoardIndex
+      );
+
+      const newCardIndex =
+        Storage.boards[UI.currentBoardIndex].lists[clickedListIndex].cards.length - 1;
+      DOM.createCard(UI.currentBoardIndex, clickedListIndex, newCardIndex);
+    });
 
     const removeListBtn = document.createElement("button");
     removeListBtn.classList.add("removeList");
     removeListBtn.appendChild(
-      DOM.createSVG("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z")
+      DOM.createSVG(
+        "M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
+      )
     );
     removeListBtn.addEventListener("click", () => {
       list.remove();
-      
+
       Storage.removeList(list.dataset.index, UI.currentBoardIndex);
-      
+
       DOM.updateIndexes(board);
-    })
+    });
     list.appendChild(removeListBtn);
   }
 
-
-  // cards manipulation 
+  // cards manipulation
   static createCard(boardIndex, listIndex, cardIndex) {
     const list = document.querySelector(`.list[data-index="${listIndex}"]`);
 
@@ -439,17 +471,17 @@ export default class DOM {
     card.dataset.index = cardIndex;
     list.appendChild(card);
 
-    const cardObject = Storage.boards[boardIndex].lists[listIndex].cards[cardIndex];
-    
-    
+    const cardObject =
+      Storage.boards[boardIndex].lists[listIndex].cards[cardIndex];
+
     const title = document.createElement("h3"); // the clickable "card" part of the card
     title.textContent = cardObject.title;
-    
+
     // show modal when card is clicked
     title.addEventListener("click", (e) => {
       const modal = document.querySelector(".modalWrapper");
-      const cardIndex = card.dataset.index;
-      const listIndex = list.dataset.index;
+      const clickedCardIndex = card.dataset.index;
+      const clickedListIndex = list.dataset.index;
 
       // update the last clicked card
       DOM.lastCard = e.target.parentNode;
@@ -461,7 +493,9 @@ export default class DOM {
       cardTitleText.textContent = cardObject.title;
       cardTitleInput.value = cardObject.title;
 
-      const cardDescriptionText = modal.querySelector("p.description.dynamicText");
+      const cardDescriptionText = modal.querySelector(
+        "p.description.dynamicText"
+      );
       const cardDescriptionInput = modal.querySelector("textarea.description");
       cardDescriptionText.textContent = cardObject.description;
       cardDescriptionInput.value = cardObject.description;
@@ -469,44 +503,41 @@ export default class DOM {
         cardDescriptionText.textContent = "Add a more detailed description...";
       }
 
-
       // make modal visible
       modal.style.display = "flex";
-      
 
-
-      
-      
       // dynamic input for description
-      DOM.attachInputListener(cardDescriptionText, cardDescriptionInput, () => {
-        const newDescription = cardDescriptionInput.value;
-        
-        // change description in modal
-        cardDescriptionText.textContent = newDescription;
-        
-        // update storage
-        Storage.changeCardDescription(newDescription, cardIndex, listIndex, UI.currentBoardIndex);
-      }, false)
+      DOM.attachInputListener(
+        cardDescriptionText,
+        cardDescriptionInput,
+        () => {
+          const newDescription = cardDescriptionInput.value;
 
+          // change description in modal
+          cardDescriptionText.textContent = newDescription;
 
-    })
-
+          // update storage
+          Storage.changeCardDescription(
+            newDescription,
+            clickedCardIndex,
+            clickedListIndex,
+            UI.currentBoardIndex
+          );
+        },
+        false
+      );
+    });
 
     card.appendChild(title);
 
-
     const moveUpBtn = document.createElement("button");
-    moveUpBtn.appendChild(
-      DOM.createSVG(DOM.svgArrowsPaths[0])
-    );
+    moveUpBtn.appendChild(DOM.createSVG(DOM.svgArrowsPaths[0]));
     moveUpBtn.classList.add("moveUpBtn");
     DOM.moveCardListener(moveUpBtn);
     card.appendChild(moveUpBtn);
-    
+
     const moveDownBtn = document.createElement("button");
-    moveDownBtn.appendChild(
-      DOM.createSVG(DOM.svgArrowsPaths[2])
-    );
+    moveDownBtn.appendChild(DOM.createSVG(DOM.svgArrowsPaths[2]));
     moveDownBtn.classList.add("moveDownBtn");
     DOM.moveCardListener(moveDownBtn);
     card.appendChild(moveDownBtn);

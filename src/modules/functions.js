@@ -4,4 +4,5 @@ function arrayMove(array, fromIndex, toIndex) {
   array.splice(toIndex, 0, item);
 }
 
-export {arrayMove}
+// eslint-disable-next-line import/prefer-default-export
+export { arrayMove };

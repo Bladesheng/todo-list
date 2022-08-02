@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-$font-stack: 'Roboto', sans-serif;
+$font-stack: "Roboto", sans-serif;
 $font-color-primary: rgb(199, 196, 189);
 $font-color-secondary: rgb(25, 66, 146);
 
@@ -14,7 +14,6 @@ $color-light: rgb(34, 37, 38);
 $color-focus-dark: rgb(46, 49, 53);
 $color-focus-blue: rgb(35, 92, 153);
 
-
 html {
   height: -webkit-fill-available;
 }
@@ -23,7 +22,7 @@ body {
   height: 100vh;
   min-height: 100vh;
   min-height: -webkit-fill-available;
- 
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,7 +36,6 @@ button,
 input {
   font-family: $font-stack;
 }
-
 
 // stuff for hiding / showing dynamic input field
 .dynamicText,
@@ -55,7 +53,6 @@ input {
 .dynamicInput.active {
   display: inline-block;
 }
-
 
 .modalWrapper {
   display: none; // hidden by default
@@ -81,8 +78,6 @@ input {
     row-gap: 1rem;
     align-items: center;
 
-
-
     h2.title {
       grid-column: 1 / 2;
       grid-row: 1 / 2;
@@ -94,12 +89,12 @@ input {
       grid-row: 1 / 2;
 
       padding: 0.2em;
-      
+
       background-color: $color-secondary;
       border: 2px solid $color-focus-blue;
       border-radius: 3px;
       outline: none;
-      
+
       color: $font-color-primary;
       font-family: $font-stack;
       font-size: 1.5rem;
@@ -126,11 +121,11 @@ input {
     div.description {
       font-weight: 500;
     }
-    
+
     p.description.dynamicText {
       grid-column: 1 / 3;
       grid-row: 3 / 4;
-      
+
       padding: 0.69em 0;
       padding-right: 0.5em;
       padding-top: 0.69em;
@@ -140,7 +135,7 @@ input {
     textarea.description {
       grid-column: 1 / 3;
       grid-row: 3 / 4;
-      
+
       padding: 0.5em;
       margin-left: -0.63em;
       position: relative;
@@ -151,7 +146,7 @@ input {
       border: 2px solid $color-focus-blue;
       border-radius: 3px;
       outline: none;
-    
+
       color: $font-color-primary;
       font-family: $font-stack;
       font-weight: 400;
@@ -159,7 +154,7 @@ input {
 
       resize: none; // prevent user from resizing textarea manually
     }
-   
+
     .delete {
       grid-row: 4 / 5;
       grid-column: 2 / 3;
@@ -178,7 +173,6 @@ input {
   }
 }
 
-
 main {
   flex: 1 1 auto;
 
@@ -187,7 +181,6 @@ main {
   display: grid;
   grid-template-columns: 25vw auto;
   grid-template-rows: 1fr auto;
-
 
   .sidebar {
     grid-row: 1 / 3;
@@ -207,7 +200,7 @@ main {
       svg {
         height: 1.1rem;
       }
-      
+
       h1 {
         font-size: 1rem;
       }
@@ -221,7 +214,7 @@ main {
       border: none;
       border-radius: 3px;
       background: none;
-      
+
       color: $font-color-primary;
       font-weight: 500;
 
@@ -247,7 +240,6 @@ main {
     }
   }
 
-
   .currentBoard {
     flex: 1 1 auto;
 
@@ -259,8 +251,8 @@ main {
     background-color: black;
     padding: 10px;
 
-    >.dynamicText,
-    >.dynamicInput {
+    > .dynamicText,
+    > .dynamicInput {
       order: 0;
     }
 
@@ -294,17 +286,16 @@ main {
 
     input.rename {
       width: 100%;
-      
+
       font-size: 1.1rem;
       padding: 0.3em;
-      
+
       outline: none;
     }
 
     button.delete {
       justify-self: end;
     }
-
 
     .board {
       grid-column: 1 / 3;
@@ -351,7 +342,7 @@ main {
           outline: none;
           border: 2px solid $color-focus-blue;
           border-radius: 3px;
-        } 
+        }
 
         .card {
           grid-column: 1 / 4;
@@ -384,7 +375,6 @@ main {
             grid-column: 2 / 3;
             grid-row: 2 / 3;
           }
-
         }
         .card:hover {
           background-color: rgb(29, 32, 33);
@@ -397,7 +387,7 @@ main {
           height: 40px;
           padding-left: 0.3em;
           margin-right: 0.3em;
-          
+
           text-align: start;
           font-size: 1rem;
           font-weight: 400;
@@ -407,7 +397,7 @@ main {
           border: none;
           border-radius: 3px;
           outline: none;
-          
+
           cursor: pointer;
         }
         .newCardInput {
@@ -473,7 +463,7 @@ main {
         color: $font-color-primary;
         font-size: 1rem;
         font-weight: 500;
-        
+
         background: none;
         border: none;
         outline: none;
@@ -490,10 +480,9 @@ main {
   }
 }
 
-
 footer {
   grid-column: 2 / 3;
-  
+
   text-align: center;
   padding: 0.6rem;
   font-size: 0.6rem;
@@ -505,14 +494,12 @@ footer {
   }
 }
 
-
-@media (min-width:600px) {
-  .modalWrapper { 
+@media (min-width: 600px) {
+  .modalWrapper {
     .modal {
       grid-template-columns: 330px 1.5rem;
     }
   }
-
 
   main {
     grid-template-columns: 200px auto;
@@ -520,7 +507,7 @@ footer {
     .currentBoard {
       .board {
         grid-auto-columns: 290px;
-    
+
         .list {
           grid-template-columns: 1rem calc(290px - 2rem - 10px) 1rem;
         }

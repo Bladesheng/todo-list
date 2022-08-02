@@ -1,59 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo List</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-  </style>
-</head>
-<body>
-  <div class="modalWrapper">
-    <div class="modal">
-      <h2 class="title dynamicText">placeholder-title</h2>
-      <input class="dynamicInput title" type="text">
-      
-      <button class="close">
-        <svg viewBox="0 0 24 24">
-          <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
-        </svg>
-      </button>
-      
-      <div class="description">Description</div>
-      <p class="description dynamicText"></p>
-      <textarea type="text" class="description dynamicInput" placeholder="Add a more detailed description..."></textarea>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+    </style>
+  </head>
+  <body>
+    <div class="modalWrapper">
+      <div class="modal">
+        <h2 class="title dynamicText">placeholder-title</h2>
+        <input class="dynamicInput title" type="text" />
 
-      <button class="delete">
-        <svg viewBox="0 0 24 24">
-          <path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
-        </svg>
-      </button>
+        <button class="close">
+          <svg viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
+            />
+          </svg>
+        </button>
+
+        <div class="description">Description</div>
+        <p class="description dynamicText"></p>
+        <textarea
+          type="text"
+          class="description dynamicInput"
+          placeholder="Add a more detailed description..."
+        ></textarea>
+
+        <button class="delete">
+          <svg viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
-  </div>
 
+    <main>
+      <div class="sidebar">
+        <div class="logo">
+          <svg viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M19.5,2H4.5A2.5,2.5 0 0,0 2,4.5V19.5A2.5,2.5 0 0,0 4.5,22H19.5A2.5,2.5 0 0,0 22,19.5V4.5A2.5,2.5 0 0,0 19.5,2M10.7,17.2A1.2,1.2 0 0,1 9.5,18.4H5.8C5.14,18.4 4.6,17.86 4.6,17.2V5.8A1.2,1.2 0 0,1 5.8,4.6H9.5C10.16,4.6 10.7,5.14 10.7,5.8V17.2M19.4,12.2C19.4,12.86 18.86,13.4 18.2,13.4H14.5C13.84,13.4 13.3,12.86 13.3,12.2V5.8C13.3,5.14 13.84,4.6 14.5,4.6H18.2C18.86,4.6 19.4,5.14 19.4,5.8V12.2Z"
+            />
+          </svg>
+          <h1>To-Dos</h1>
+        </div>
 
-  <main>
-    <div class="sidebar">
-      <div class="logo">
-        <svg viewBox="0 0 24 24">
-          <path fill="currentColor" d="M19.5,2H4.5A2.5,2.5 0 0,0 2,4.5V19.5A2.5,2.5 0 0,0 4.5,22H19.5A2.5,2.5 0 0,0 22,19.5V4.5A2.5,2.5 0 0,0 19.5,2M10.7,17.2A1.2,1.2 0 0,1 9.5,18.4H5.8C5.14,18.4 4.6,17.86 4.6,17.2V5.8A1.2,1.2 0 0,1 5.8,4.6H9.5C10.16,4.6 10.7,5.14 10.7,5.8V17.2M19.4,12.2C19.4,12.86 18.86,13.4 18.2,13.4H14.5C13.84,13.4 13.3,12.86 13.3,12.2V5.8C13.3,5.14 13.84,4.6 14.5,4.6H18.2C18.86,4.6 19.4,5.14 19.4,5.8V12.2Z" />
-        </svg>
-        <h1>To-Dos</h1>
+        <button class="newBoard dynamicText">+ New board</button>
+        <input class="newBoard dynamicInput" type="text" />
       </div>
 
-      <button class="newBoard dynamicText">+ New board</button>
-      <input class="newBoard dynamicInput" type="text">
-    </div>
+      <div class="currentBoard"></div>
 
-    <div class="currentBoard">
-
-    </div>
-
-    <footer>
-      <p>Made by <a href="https://github.com/Bladesheng">Bladesheng</a></p>
-    </footer>
-  </main>
-</body>
+      <footer>
+        <p>Made by <a href="https://github.com/Bladesheng">Bladesheng</a></p>
+      </footer>
+    </main>
+  </body>
 </html>
