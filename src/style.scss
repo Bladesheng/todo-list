@@ -253,8 +253,7 @@ main {
   }
 
   button.burger {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
+    position: fixed;
     z-index: 2;
     margin: 15px 0 0 15px;
 
@@ -278,7 +277,7 @@ main {
 
     display: grid;
     grid-template-columns: auto auto;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 2.5rem 1fr;
     gap: 0.8rem;
 
     background-color: black;
@@ -290,9 +289,10 @@ main {
     }
 
     h1 {
-      align-self: center;
+      position: fixed;
       padding: 0.3em;
       margin-left: 3rem;
+      margin-top: 0.3em;
 
       font-size: 1.1rem;
       font-weight: 500;
@@ -302,7 +302,7 @@ main {
 
     button.delete,
     input.rename {
-      width: 4rem;
+      position: fixed;
       height: 2.5rem;
 
       background-color: $color-secondary;
@@ -319,8 +319,9 @@ main {
     }
 
     input.rename {
-      width: 100%;
       margin-left: 3rem;
+      margin-top: 0.05em;
+      width: calc(100vw - 9rem);
 
       font-size: 1.1rem;
       padding: 0.3em;
@@ -329,11 +330,14 @@ main {
     }
 
     button.delete {
-      justify-self: end;
+      margin-top: 0.05em;
+      right: 0.3rem;
+      width: 4rem;
     }
 
     .board {
       grid-column: 1 / 3;
+      grid-row: 2 / 3;
       align-self: start;
 
       display: grid;
