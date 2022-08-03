@@ -65,7 +65,7 @@ export default class DOM {
       };
     });
 
-    // show sidebar
+    // show sidebar when button is clicked
     const hamburgerBtn = document.querySelector("button.burger");
     const sidebar = document.querySelector(".sidebar");
 
@@ -73,10 +73,13 @@ export default class DOM {
       sidebar.classList.remove("hidden");
     });
 
-    // hide sidebar
+    // hide sidebar when you click somewhere else
     DOM.currentBoard.addEventListener("click", () => {
       sidebar.classList.add("hidden");
     });
+
+    // hide/show sidebar by swiping on phone
+    DOM.sidebarSwipeListener();
   }
 
   // for deleting current card from modal
@@ -99,6 +102,7 @@ export default class DOM {
     });
   }
 
+  // for changing name of card from modal
   static modalTitleListener() {
     const cardTitleText = document.querySelector("h2.title");
     const cardTitleInput = document.querySelector("input.title");
@@ -300,6 +304,42 @@ export default class DOM {
     kebabBtn.onclick = () => {
       closeMenu();
     };
+  }
+
+  static sidebarSwipeListener() {
+    // hide sidebar when you swipe left
+    // show sidebar when you swipe right (and you are on left side of page)
+    const mainNode = document.querySelector("main");
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let scrollLeftStart;
+
+    function checkDirection() {
+      const sidebar = document.querySelector(".sidebar");
+
+      // swiped left
+      if (touchEndX < touchStartX) {
+        sidebar.classList.add("hidden");
+      }
+
+      // swiped right
+      if (touchEndX > touchStartX) {
+        // only if you are scrolled to the left side of page
+        if (scrollLeftStart === 0) {
+          sidebar.classList.remove("hidden");
+        }
+      }
+    }
+
+    document.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      scrollLeftStart = mainNode.scrollLeft;
+    });
+
+    document.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      checkDirection();
+    });
   }
 
   // boards manipulation
