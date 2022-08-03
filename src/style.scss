@@ -57,7 +57,7 @@ input {
 .modalWrapper {
   display: none; // hidden by default
   position: fixed;
-  z-index: 1; // sits on top
+  z-index: 4; // sits on top
   left: 0;
   right: 0;
   width: 100%;
