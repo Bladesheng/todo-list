@@ -54,6 +54,15 @@ input {
   display: inline-block;
 }
 
+// custom scrollbar
+::-webkit-scrollbar {
+  height: 5px;
+}
+// handle
+::-webkit-scrollbar-thumb {
+  background: rgb(64, 64, 64);
+}
+
 .modalWrapper {
   display: none; // hidden by default
   position: fixed;
