@@ -1,19 +1,23 @@
 export default class Card {
-  constructor(title, description, priority) {
+  title: string;
+  description: string;
+  priority: number;
+
+  constructor(title: string, description: string, priority: number) {
     this.title = title;
     this.description = description;
     this.priority = priority;
   }
 
-  changeTitle(newTitle) {
+  changeTitle(newTitle: string) {
     this.title = newTitle;
   }
 
-  changeDescription(newDescription) {
+  changeDescription(newDescription: string) {
     this.description = newDescription;
   }
 
-  changePriority(newPriority) {
+  changePriority(newPriority: number) {
     this.priority = newPriority;
   }
 }

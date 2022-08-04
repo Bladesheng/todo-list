@@ -1,6 +1,10 @@
 import UI from "./UI";
 import Storage from "./Storage";
 
+interface inputListenerInterface {
+  (): void;
+}
+
 export default class DOM {
   static currentBoard;
 
@@ -144,9 +148,9 @@ export default class DOM {
   }
 
   static attachInputListener(
-    textElement,
-    inputElement,
-    processCallback,
+    textElement: Element,
+    inputElement: HTMLInputElement,
+    processCallback: inputListenerInterface,
     wipeInput = true
   ) {
     // Event listener that dynamically swaps visibility of

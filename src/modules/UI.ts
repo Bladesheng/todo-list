@@ -2,7 +2,7 @@ import Storage from "./Storage";
 import DOM from "./DOM";
 
 export default class UI {
-  static currentBoardIndex;
+  static currentBoardIndex: number;
 
   static init() {
     if (
@@ -10,7 +10,7 @@ export default class UI {
       localStorage.getItem("boards") !== "[]"
     ) {
       // reconstruct board links (in sidebar) from local storage
-      Storage.boards.forEach((board, boardIndex) => {
+      Storage.boards.forEach((board: object, boardIndex: number) => {
         DOM.createBoardBtn(boardIndex);
       });
 
@@ -18,7 +18,9 @@ export default class UI {
     }
 
     const newBoardBtn = document.querySelector("button.newBoard");
-    const newBoardInput = document.querySelector("input.newBoard");
+    const newBoardInput: HTMLInputElement =
+      document.querySelector("input.newBoard");
+
     DOM.attachInputListener(newBoardBtn, newBoardInput, () => {
       const userInput = newBoardInput.value;
       const boardIndex = Storage.createBoard(userInput);
@@ -28,6 +30,5 @@ export default class UI {
       Storage.setLocalStorage(); // to save the new current board index
       console.log(Storage.boards);
     });
-
   }
 }

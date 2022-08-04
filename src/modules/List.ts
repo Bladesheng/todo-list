@@ -1,25 +1,28 @@
 import { arrayMove } from "./functions";
 
 export default class List {
-  constructor(name) {
+  name: string;
+  cards: object[];
+
+  constructor(name: string) {
     this.name = name;
 
     this.cards = [];
   }
 
-  changeName(newName) {
+  changeName(newName: string) {
     this.name = newName;
   }
 
-  addCard(card) {
+  addCard(card: object) {
     this.cards.push(card);
   }
 
-  removeCard(cardPosition) {
+  removeCard(cardPosition: number) {
     this.cards.splice(cardPosition, 1);
   }
 
-  moveCard(oldPosition, newPosition) {
+  moveCard(oldPosition: number, newPosition: number) {
     arrayMove(this.cards, oldPosition, newPosition);
   }
 }

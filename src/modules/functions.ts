@@ -1,4 +1,4 @@
-function arrayMove(array, fromIndex, toIndex) {
+function arrayMove(array: any[], fromIndex: number, toIndex: number) {
   const item = array[fromIndex];
   array.splice(fromIndex, 1);
   array.splice(toIndex, 0, item);
