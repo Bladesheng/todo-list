@@ -2,6 +2,10 @@ export interface ICard {
   title: string;
   description: string;
   priority: number;
+
+  changeTitle(newTitle: string): void;
+  changeDescription(newDescription: string): void;
+  changePriority(newPriority: number): void;
 }
 
 export class Card implements ICard {

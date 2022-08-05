@@ -6,13 +6,13 @@ interface inputListenerInterface {
 }
 
 export default class DOM {
-  static currentBoard;
+  static currentBoard: HTMLElement;
 
-  static sidebar;
+  static sidebar: HTMLElement;
 
-  static svgArrowsPaths;
+  static svgArrowsPaths: string[];
 
-  static lastCard;
+  static lastCard: HTMLElement;
 
   static {
     DOM.currentBoard = document.querySelector(".currentBoard");
@@ -33,7 +33,7 @@ export default class DOM {
     });
 
     // close modal when you click outside of modal or the "X" button
-    const modalWrapper = document.querySelector(".modalWrapper");
+    const modalWrapper: HTMLElement = document.querySelector(".modalWrapper");
     modalWrapper.addEventListener("click", (e) => {
       if (e.target === modalWrapper) {
         modalWrapper.style.display = "none";
@@ -53,7 +53,9 @@ export default class DOM {
     DOM.modalTitleListener();
 
     // textarea automatic resizing
-    const modalTextarea = document.querySelector("textarea.description");
+    const modalTextarea: HTMLTextAreaElement = document.querySelector(
+      "textarea.description"
+    );
     modalTextarea.addEventListener("focus", () => {
       function resize() {
         modalTextarea.style.height = "";
@@ -90,12 +92,13 @@ export default class DOM {
   static modalDeleteListener() {
     const deleteBtn = document.querySelector(".modal>.delete"); //
     deleteBtn.addEventListener("click", () => {
-      const list = DOM.lastCard.parentNode;
-      const cardIndex = DOM.lastCard.dataset.index;
-      const listIndex = list.dataset.index;
-      const boardIndex = list.parentNode.dataset.index;
+      const list = DOM.lastCard.parentNode as HTMLElement;
+      const listIndex = parseInt(list.dataset.index);
+      const cardIndex = parseInt(DOM.lastCard.dataset.index);
+      const board = list.parentNode as HTMLElement;
+      const boardIndex = parseInt(board.dataset.index);
 
-      const modalWrapper = document.querySelector(".modalWrapper");
+      const modalWrapper: HTMLElement = document.querySelector(".modalWrapper");
       modalWrapper.style.display = "none";
 
       // delete card from list in DOM
@@ -109,7 +112,8 @@ export default class DOM {
   // for changing name of card from modal
   static modalTitleListener() {
     const cardTitleText = document.querySelector("h2.title");
-    const cardTitleInput = document.querySelector("input.title");
+    const cardTitleInput: HTMLInputElement =
+      document.querySelector("input.title");
 
     DOM.attachInputListener(
       cardTitleText,
@@ -117,10 +121,11 @@ export default class DOM {
       () => {
         const newTitle = cardTitleInput.value;
 
-        const list = DOM.lastCard.parentNode;
-        const cardIndex = DOM.lastCard.dataset.index;
-        const listIndex = list.dataset.index;
-        const boardIndex = list.parentNode.dataset.index;
+        const list = DOM.lastCard.parentNode as HTMLElement;
+        const cardIndex: number = parseInt(DOM.lastCard.dataset.index);
+        const listIndex: number = parseInt(list.dataset.index);
+        const board = list.parentNode as HTMLElement;
+        const boardIndex: number = parseInt(board.dataset.index);
 
         const title = DOM.lastCard.querySelector("h3");
 
@@ -137,13 +142,13 @@ export default class DOM {
     );
   }
 
-  static updateIndexes(parentNode) {
+  static updateIndexes(parentNode: ParentNode) {
     // everytime you delete/move element in DOM, the indexes
     // need to be updated to match the storage
     // to prevent indexes going: "0, 1, 3, 4, 5"
     const elements = parentNode.querySelectorAll(":scope > [data-index]");
-    elements.forEach((element, newIndex) => {
-      element.dataset.index = newIndex;
+    elements.forEach((element: HTMLElement, newIndex: number) => {
+      element.dataset.index = String(newIndex);
     });
   }
 
@@ -200,9 +205,9 @@ export default class DOM {
     });
   }
 
-  static moveListListener(directionBtn) {
+  static moveListListener(directionBtn: HTMLButtonElement) {
     directionBtn.addEventListener("click", () => {
-      const list = directionBtn.parentNode;
+      const list = directionBtn.parentNode as HTMLElement;
       const listIndex = parseInt(list.dataset.index, 10);
       const lists = document.querySelectorAll(".list");
       const direction = directionBtn.classList[0];
@@ -220,12 +225,13 @@ export default class DOM {
     });
   }
 
-  static moveCardListener(directionBtn) {
+  static moveCardListener(directionBtn: HTMLButtonElement) {
     directionBtn.addEventListener("click", () => {
-      const card = directionBtn.parentNode;
+      const card = directionBtn.parentNode as HTMLElement;
       const cardIndex = parseInt(card.dataset.index, 10);
       const cards = card.parentNode.querySelectorAll(".card");
-      const listIndex = parseInt(card.parentNode.dataset.index, 10);
+      const list = card.parentNode as HTMLElement;
+      const listIndex = parseInt(list.dataset.index, 10);
       const direction = directionBtn.classList[0];
 
       // also makes sure you don't exceed array range
@@ -251,7 +257,7 @@ export default class DOM {
     });
   }
 
-  static createSVG(customPath) {
+  static createSVG(customPath: string) {
     const SVG_NS = "http://www.w3.org/2000/svg";
     const SVGElement = document.createElementNS(SVG_NS, "svg");
     SVGElement.setAttribute("viewBox", "0 0 24 24");
@@ -264,7 +270,7 @@ export default class DOM {
     return SVGElement;
   }
 
-  static createKebabMenu(kebabBtn) {
+  static createKebabMenu(kebabBtn: HTMLButtonElement) {
     const kebabMenu = document.createElement("div");
     kebabMenu.classList.add("menu");
 
@@ -281,11 +287,10 @@ export default class DOM {
       event.preventDefault();
 
       // remove the list from DOM and from Storage
-      kebabBtn.parentNode.remove();
-      Storage.removeList(
-        kebabBtn.parentNode.dataset.index,
-        UI.currentBoardIndex
-      );
+      const list = kebabBtn.parentNode as HTMLElement;
+      const listIndex = parseInt(list.dataset.index);
+      list.remove();
+      Storage.removeList(listIndex, UI.currentBoardIndex);
 
       const board = document.querySelector(".board");
       DOM.updateIndexes(board);
@@ -316,7 +321,7 @@ export default class DOM {
     const mainNode = document.querySelector("main");
     let touchStartX = 0;
     let touchEndX = 0;
-    let scrollLeftStart;
+    let scrollLeftStart: number;
 
     function checkDirection() {
       const sidebar = document.querySelector(".sidebar");
@@ -347,15 +352,16 @@ export default class DOM {
   }
 
   // boards manipulation
-  static createBoardBtn(boardIndex) {
+  static createBoardBtn(boardIndex: number) {
     const boardBtn = document.createElement("button");
     const name = Storage.boards[boardIndex].name;
     boardBtn.textContent = name;
-    boardBtn.dataset.index = boardIndex;
+    boardBtn.dataset.index = String(boardIndex);
     DOM.sidebar.appendChild(boardBtn);
 
     boardBtn.addEventListener("click", (e) => {
-      const clickedBoardIndex = e.target.dataset.index;
+      const clickedBoard = e.target as HTMLButtonElement;
+      const clickedBoardIndex = parseInt(clickedBoard.dataset.index);
       // update and save new current board index
       UI.currentBoardIndex = clickedBoardIndex;
       Storage.setLocalStorage();
@@ -364,7 +370,7 @@ export default class DOM {
     });
   }
 
-  static createBoard(boardIndex) {
+  static createBoard(boardIndex: number) {
     DOM.wipeBoard();
 
     const boardName = Storage.boards[boardIndex].name;
@@ -426,7 +432,7 @@ export default class DOM {
 
     const board = document.createElement("div");
     board.classList.add("board");
-    board.dataset.index = boardIndex;
+    board.dataset.index = String(boardIndex);
     DOM.currentBoard.appendChild(board);
 
     const newListBtn = document.createElement("button");
@@ -454,7 +460,7 @@ export default class DOM {
   }
 
   // constructs the whole board, including all lists and cards
-  static constructBoard(boardIndex) {
+  static constructBoard(boardIndex: number) {
     // reconstruct last selected board
     DOM.createBoard(boardIndex);
 
@@ -471,12 +477,12 @@ export default class DOM {
   }
 
   // lists manipulation
-  static createList(boardIndex, listIndex) {
+  static createList(boardIndex: number, listIndex: number) {
     const board = document.querySelector(".board");
 
     const list = document.createElement("div");
     list.classList.add("list");
-    list.dataset.index = listIndex;
+    list.dataset.index = String(listIndex);
     board.appendChild(list);
 
     const moveBackBtn = document.createElement("button");
@@ -503,10 +509,11 @@ export default class DOM {
       () => {
         const newName = headingInput.value;
         heading.textContent = newName;
+        const selectedListIndex = parseInt(list.dataset.index);
 
         Storage.changeListName(
           newName,
-          list.dataset.index,
+          selectedListIndex,
           UI.currentBoardIndex
         );
       },
@@ -532,9 +539,9 @@ export default class DOM {
     DOM.attachInputListener(newCardBtn, newCardInput, () => {
       const cardName = newCardInput.value;
       const cardDescription = "";
-      const cardPriority = "";
+      const cardPriority = 0;
 
-      const clickedListIndex = list.dataset.index;
+      const clickedListIndex = parseInt(list.dataset.index);
       Storage.createCard(
         cardName,
         cardDescription,
@@ -563,12 +570,14 @@ export default class DOM {
   }
 
   // cards manipulation
-  static createCard(boardIndex, listIndex, cardIndex) {
-    const list = document.querySelector(`.list[data-index="${listIndex}"]`);
+  static createCard(boardIndex: number, listIndex: number, cardIndex: number) {
+    const list: HTMLElement = document.querySelector(
+      `.list[data-index="${listIndex}"]`
+    );
 
     const card = document.createElement("div");
     card.classList.add("card");
-    card.dataset.index = cardIndex;
+    card.dataset.index = String(cardIndex);
     list.appendChild(card);
 
     const cardObject =
@@ -579,24 +588,28 @@ export default class DOM {
 
     // show modal when card is clicked
     title.addEventListener("click", (e) => {
-      const modal = document.querySelector(".modalWrapper");
-      const clickedCardIndex = card.dataset.index;
-      const clickedListIndex = list.dataset.index;
+      const modal: HTMLElement = document.querySelector(".modalWrapper");
+      const clickedCardIndex = parseInt(card.dataset.index);
+      const clickedListIndex = parseInt(list.dataset.index);
 
       // update the last clicked card
-      DOM.lastCard = e.target.parentNode;
+      const clickedCard = (e.target as HTMLElement).parentNode as HTMLElement;
+      DOM.lastCard = clickedCard;
 
       // populate the modal with current card's properties
       // and fill inputs with the properties too
       const cardTitleText = modal.querySelector("h2.title");
-      const cardTitleInput = modal.querySelector("input.title");
+      const cardTitleInput: HTMLInputElement =
+        modal.querySelector("input.title");
       cardTitleText.textContent = cardObject.title;
       cardTitleInput.value = cardObject.title;
 
       const cardDescriptionText = modal.querySelector(
         "p.description.dynamicText"
       );
-      const cardDescriptionInput = modal.querySelector("textarea.description");
+      const cardDescriptionInput: HTMLInputElement = modal.querySelector(
+        "textarea.description"
+      );
       cardDescriptionText.textContent = cardObject.description;
       cardDescriptionInput.value = cardObject.description;
       if (cardObject.description === "") {

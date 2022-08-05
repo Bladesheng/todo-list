@@ -4,6 +4,11 @@ import { IList } from "./List";
 export interface IBoard {
   name: string;
   lists: IList[];
+
+  changeName(newName: string): void;
+  addList(list: IList): void;
+  removeList(listPosition: number): void;
+  moveList(oldPosition: number, newPosition: number): void;
 }
 
 export class Board implements IBoard {

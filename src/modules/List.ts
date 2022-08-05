@@ -4,6 +4,11 @@ import { ICard } from "./Card";
 export interface IList {
   name: string;
   cards: ICard[];
+
+  changeName(newName: string): void;
+  addCard(card: ICard): void;
+  removeCard(cardPosition: number): void;
+  moveCard(oldPosition: number, newPosition: number): void;
 }
 
 export class List implements IList {

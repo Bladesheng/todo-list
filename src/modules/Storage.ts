@@ -1,10 +1,10 @@
-import Board from "./Board";
-import List from "./List";
-import Card from "./Card";
+import { IBoard, Board } from "./Board";
+import { List } from "./List";
+import { Card } from "./Card";
 import UI from "./UI";
 
 export default class Storage {
-  static boards;
+  static boards: IBoard[];
 
   static {
     Storage.getLocalStorage();
@@ -19,7 +19,7 @@ export default class Storage {
 
       // recreate board objects
       const jsonBoards = JSON.parse(localStorage.getItem("boards"));
-      jsonBoards.forEach((jsonBoard) => {
+      jsonBoards.forEach((jsonBoard: IBoard) => {
         const board = new Board(jsonBoard.name);
 
         // recreate list objects
@@ -44,97 +44,130 @@ export default class Storage {
         Storage.boards.push(board);
       });
 
-      UI.currentBoardIndex = localStorage.getItem("lastBoard");
+      UI.currentBoardIndex = parseInt(localStorage.getItem("lastBoard"));
       console.log(Storage.boards);
     }
   }
 
   static setLocalStorage() {
     localStorage.setItem("boards", JSON.stringify(Storage.boards));
-    localStorage.setItem("lastBoard", UI.currentBoardIndex);
+    localStorage.setItem("lastBoard", String(UI.currentBoardIndex));
   }
 
   // boards manipulation
-  static createBoard(name) {
+  static createBoard(name: string) {
     const newBoard = new Board(name);
     Storage.boards.push(newBoard);
     Storage.setLocalStorage();
     return Storage.boards.length - 1; // return index of the new board
   }
 
-  static changeBoardName(newName, boardIndex) {
+  static changeBoardName(newName: string, boardIndex: number) {
     const board = Storage.boards[boardIndex];
     board.changeName(newName);
     Storage.setLocalStorage();
   }
 
-  static deleteBoard(boardIndex) {
+  static deleteBoard(boardIndex: number) {
     Storage.boards.splice(boardIndex, 1);
     Storage.setLocalStorage();
   }
 
   // lists manipulation
-  static createList(name, boardIndex) {
+  static createList(name: string, boardIndex: number) {
     const board = Storage.boards[boardIndex];
     const list = new List(name);
     board.addList(list);
     Storage.setLocalStorage();
   }
 
-  static changeListName(newName, listIndex, boardIndex) {
+  static changeListName(
+    newName: string,
+    listIndex: number,
+    boardIndex: number
+  ) {
     const list = Storage.boards[boardIndex].lists[listIndex];
     list.changeName(newName);
     Storage.setLocalStorage();
   }
 
-  static moveList(oldPosition, newPosition, boardIndex) {
+  static moveList(
+    oldPosition: number,
+    newPosition: number,
+    boardIndex: number
+  ) {
     Storage.boards[boardIndex].moveList(oldPosition, newPosition);
     Storage.setLocalStorage();
   }
 
-  static removeList(listIndex, boardIndex) {
+  static removeList(listIndex: number, boardIndex: number) {
     Storage.boards[boardIndex].removeList(listIndex);
     Storage.setLocalStorage();
   }
 
   // cards manipulation
-  static createCard(name, description, priority, listIndex, boardIndex) {
+  static createCard(
+    name: string,
+    description: string,
+    priority: number,
+    listIndex: number,
+    boardIndex: number
+  ) {
     const list = Storage.boards[boardIndex].lists[listIndex];
     const card = new Card(name, description, priority);
     list.addCard(card);
     Storage.setLocalStorage();
   }
 
-  static removeCard(cardPosition, listIndex, boardIndex) {
+  static removeCard(
+    cardPosition: number,
+    listIndex: number,
+    boardIndex: number
+  ) {
     const list = Storage.boards[boardIndex].lists[listIndex];
     list.removeCard(cardPosition);
     Storage.setLocalStorage();
   }
 
-  static moveCard(oldPosition, newPosition, listIndex, boardIndex) {
+  static moveCard(
+    oldPosition: number,
+    newPosition: number,
+    listIndex: number,
+    boardIndex: number
+  ) {
     const list = Storage.boards[boardIndex].lists[listIndex];
     list.moveCard(oldPosition, newPosition);
     Storage.setLocalStorage();
   }
 
-  static changeCardTitle(newTitle, cardIndex, listIndex, boardIndex) {
+  static changeCardTitle(
+    newTitle: string,
+    cardIndex: number,
+    listIndex: number,
+    boardIndex: number
+  ) {
     const card = Storage.boards[boardIndex].lists[listIndex].cards[cardIndex];
     card.changeTitle(newTitle);
     Storage.setLocalStorage();
   }
 
   static changeCardDescription(
-    newDescription,
-    cardIndex,
-    listIndex,
-    boardIndex
+    newDescription: string,
+    cardIndex: number,
+    listIndex: number,
+    boardIndex: number
   ) {
     const card = Storage.boards[boardIndex].lists[listIndex].cards[cardIndex];
     card.changeDescription(newDescription);
     Storage.setLocalStorage();
   }
 
-  static changeCardPriority(newPriority, cardIndex, listIndex, boardIndex) {
+  static changeCardPriority(
+    newPriority: number,
+    cardIndex: number,
+    listIndex: number,
+    boardIndex: number
+  ) {
     const card = Storage.boards[boardIndex].lists[listIndex].cards[cardIndex];
     card.changePriority(newPriority);
     Storage.setLocalStorage();
