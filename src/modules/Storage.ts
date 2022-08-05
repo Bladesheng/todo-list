@@ -6,10 +6,6 @@ import UI from "./UI";
 export default class Storage {
   static boards: IBoard[];
 
-  static {
-    Storage.getLocalStorage();
-  }
-
   // local storage
   static getLocalStorage() {
     Storage.boards = [];
