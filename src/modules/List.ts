@@ -1,8 +1,14 @@
 import { arrayMove } from "./functions";
+import { ICard } from "./Card";
 
-export default class List {
+export interface IList {
   name: string;
-  cards: object[];
+  cards: ICard[];
+}
+
+export class List implements IList {
+  name: string;
+  cards: ICard[];
 
   constructor(name: string) {
     this.name = name;
@@ -14,7 +20,7 @@ export default class List {
     this.name = newName;
   }
 
-  addCard(card: object) {
+  addCard(card: ICard) {
     this.cards.push(card);
   }
 

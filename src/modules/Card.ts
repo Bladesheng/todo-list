@@ -1,4 +1,10 @@
-export default class Card {
+export interface ICard {
+  title: string;
+  description: string;
+  priority: number;
+}
+
+export class Card implements ICard {
   title: string;
   description: string;
   priority: number;
