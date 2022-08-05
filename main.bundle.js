@@ -13,7 +13,12 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-__webpack_require__(/*! ./style.scss */ "./src/style.scss");
+__webpack_require__(/*! ./style.scss */ "./src/style.scss"); // initialize storage before UI
+
+
+var Storage_1 = __webpack_require__(/*! ./modules/Storage */ "./src/modules/Storage.ts");
+
+Storage_1["default"].getLocalStorage();
 
 var UI_1 = __webpack_require__(/*! ./modules/UI */ "./src/modules/UI.ts");
 
@@ -828,10 +833,6 @@ function () {
 }();
 
 exports["default"] = Storage;
-
-(function () {
-  Storage.getLocalStorage();
-})();
 
 /***/ }),
 
